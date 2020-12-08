@@ -1,0 +1,12 @@
+12) Abstract Class
+:부모 클래스에서 추상적 정의를 하면 자손 클래스에서 
+반드시 override를 통한 재정의가 필요하다.
+ex) (부모 클래스)public abstract class a{
+	public abstract void b();
+}
+
+(자손 클래스)extends a
+@override
+public void b(){}
+
+-선언부에서는 정의만, 상속받는 클래스가 상세 구현한다. (강제성을 갖는다.)
