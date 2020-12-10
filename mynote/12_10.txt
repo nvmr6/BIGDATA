@@ -1,0 +1,20 @@
+14) Pattern
+:객체 지향의 언어의 장점들을 모아 개발할 수 있도록 만들어 놓은 툴
+
+-Singleton pattern
+:여러 상황에서 유일한 객체로 접근하기 위해 만든 패턴, 전역적인 접촉점 역할을 한다.
+
+ex)
+public calss SingletonClass{
+	private int i;
+	private static SingletonClass INSTANCE;
+	private SingletonClass(){ i = 1;} > public이 아닌 private으로 내부에서만 생성자 함수 호출
+	
+	public static SingletonClass getInstance(){
+		if(INSTANCE==null){
+			INSTANCE = new SingletonClass();
+		}
+		return INSTANCE;
+	}
+	getter / setter
+}
