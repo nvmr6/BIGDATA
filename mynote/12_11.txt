@@ -1,0 +1,30 @@
+14) Pattern
+:객체 지향의 언어의 장점들을 모아 개발할 수 있도록 만들어 놓은 툴
+
+-Srategy Pattern
+:기능을 정의하고 캡슐화하여 교환하여 사용가능하게 합니다. 기능을 독립적으로 변경이 가능합니다.
+>다양한 기능을 추상화하여 변경 및 업그레이드를 가능하게 합니다.
+
+15) API
+
+1. JDK 라이브러리
+:JDK안에 포함 되어 자바를 실행할 떄 라이브러리의 클래스와 인터페이스들을 자동으로 읽어드린다.
+ex)java.lang, java.util, java.io, java.net, java.awt, java.awt.event
+2. 필수 API
+:개발자들이 만들어 놓은 풍부한 클래스
+>String
+	:String concat(String str) : 저장된 문자열과 str문자열을 결합
+	String substring(int begin) : 시작위치부터 마지막까지의 문자열을 반환
+	int length() : 문자열 길이를 반환
+	String toUpperCase() : 대문자로 반환
+	String toLowerCase() : 소문자로 반환
+	char charAt(int index) : index 위치의 문자를 반환
+	int indexOf(char ch) : 첫번째 ch문자의 위치를 반환
+	int lastIndexOf(char ch) : 마지막 ch문자의 위치를 반환
+	boolean equals(String str) : 지정된문자열과 str문자열이 같은지 비교
+	boolean equalslgnoreCase(String str) : 대소문자구분없이 지정된문자열과 str문자열이 같은지 비교
+	String trim() : 문자열 앞뒤 공백제거
+	String replace(char old, char new) : 문자열 내의 old문자를 new문자로 반환
+	String  repalceAll(String old, String new) : 문자열 내의 old문자열을 new로 반환
+
+/*작성일: 2020.12.11 작성자:오준서*/
