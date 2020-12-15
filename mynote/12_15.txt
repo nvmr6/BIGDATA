@@ -1,0 +1,72 @@
+15) API 2
+
+1.Math class
+
+2의 3승 : Math.pow(2, 3)
+-9.9의 절대값:Math.abs(-9.9)
+16의 제곱근 : Math.sqrt(16)
+4와 7중에 작은값:Math.min(4, 7)
+7과 9중 최대값:Math.max(7, 9)
+sin(PI)=Math.sin(Math.PI)
+cos(PI)=Math.cos(Math.PI)
+tan(PI)=Math.tan(Math.PI)
+
+9.69의 소수점 반올림 : Math.round(9.69)
+9.69의 소수점 한자리 반올림 : Math.round(9.69*10)/10.0)  
+19의 일의 자리 반올림 : Math.round(19/10.0)*10)
+
+-Math.random
+:double타입의 임의의 수를 발생
+ex)random.nextInt(),nextFloat(),nextDouble(),nextLong(),nextBoolean()
+>객체 생성후 실행 가능
+
+2.Object class
+:모든 클래스들이 공통으로 갖는 클래스
+
+toString() 객체의 문자열을 반환한다.
+equals(Object obj) 같은지 여부 판단
+hashCode() 자바에서 객체를 식별하는 정수 값인 해시 코드를 반환
+Clone() 객체를 복사하는데 사용
+finalize() 객체를 더 이상 사용하지 않을 때 쓰레기 수집 기능을 수행한다.
+getClass() 객체의 클래스 이름을 Class형으로 반환한다
+notify() 대기중인 스레드를 하나 다시 시작한다.
+wait() 스레드의 작동을 중지하고 대기 상태로 만든다.
+
+-toString(), equals() 은 오버라이드를 통해 변경 후 사용한다.
+
+3. Scanner
+:키보드에서 타이핑하는 문자열 또는 입출력 프로그래밍에서 값을 읽어올 때 사용
+-System.out.println(sysout)
+console창에만 표시, 따라서 테스트 용으로 많이 사용 됩니다.(println(), print(), printf())
+>next(): 문자열 입력, nextInt(): 정수 입력, nextLine(): 화이트 스페이스를 포함한 문자열 입력(refresh buffer)
+
+4. Wrapper
+:기초데이터를 객체 데이터로 변환합니다.
+ex) Integer.parseInt(value[i]): 문자열을 정수로 변환
+String.valueOf(12): 정수를 문자열로 변환
+
+5. Timer
+:일정한 시간이 되면 timertask객체가 작동되도록 하거나 일정시간마다 작동하게 한다. (추상클래스이므로 오버라이드를 통해 정의한다.)
+ex)
+Timer timer = new Timer(true);
+	TimerTask t1 = new ExTimerTask1();
+	TimerTask t2 = new ExTimerTask2();
+	timer.schedule(t1, 2000);	//2초후 실행
+	timer.schedule(t2, 1000, 500);//1초후 0.5초마다 실행
+	Thread.sleep(10000); //10초간 대기
+
+6. DecimalFormat
+:숫자를 원하는 포맷으로 출력할 수 있다.
+ex)
+DecimalFormat df0 = new DecimalFormat("000000000");
+		
+		DecimalFormat df1 = new DecimalFormat("#########");
+		DecimalFormat df2 = new DecimalFormat("0.00000");
+		DecimalFormat df3 = new DecimalFormat("0,000.00000");
+		DecimalFormat df4 = new DecimalFormat("#,###.#####");
+		DecimalFormat df5 = new DecimalFormat("#.##%");
+		DecimalFormat df6 = new DecimalFormat("#.##E0");
+//#(있으면 출력 없으면 출력 안 함) 0(반드시 출력)  (, % E 입력 가능 )
+
+
+/*2020.12.15 작성자: 오준서*/
