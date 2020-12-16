@@ -1,0 +1,56 @@
+16) Exception
+:프로그램에서 문제가 발생할 만한 곳을 예상하여 문제 발생시 대처를 미리 프로그래밍하는 것
+>한 부분의 에러에도 프로그램이 동작하는 데 문제가 없게 한다. 우회나 대처 구동을 미리 프로그래밍한다.
+try {
+    	try블럭 ; 익셉션이 발생할 가능성이 있는 명령문들
+}catch(익셉션타입 익셉션변수) {
+	try블록안에서 문제가 발생했을 때 대처방안 기술
+} finally 
+	익셉션 발생 여부와 상관없이 맨 마지막에 실행할 명령
+}
+
+-Exception type: IOException, ClassNotFoundException, RuntimeException, ArithmeticException, 
+ClassCaseException, NullPointerException, IndexOutOfBoundsException 등등
+-catch문에 예외 처리를 여러개 할 수 있다.
+
+-Throw
+:호출한 쪽으로 예외를 던저버리는 방식
+ex) public class MainClass {
+	public static void main(String[] args) {
+		ThrowsEx ex = new ThrowsEx();
+	}
+} package com.ch.ex2throws;
+public class ThrowsEx {
+	public ThrowsEx(){
+		actionC();
+	}
+	private void actionC(){
+		System.out.println("actionC 전반부");
+		actionB();
+		System.out.println("actionC 후반부");
+	}
+	private void actionB() {
+		System.out.println("actionB 전반부");
+		try{
+			actionA();
+		}catch (IndexOutOfBoundsException e) {
+System.out.println("예외 처리는 여기서");
+			System.out.println("예외메세지 : "+e.getMessage());
+		}
+		System.out.println("actionB 후반부");
+	}
+	private void actionA() throws ArrayIndexOutOfBoundsException {
+		System.out.println("actionA 전반부");
+		int[] iArr = {0,1,2,3};
+		System.out.println("iArr[4]="+iArr[4]);
+		System.out.println("actionA 후반부");
+	}
+}
+>부모단의 Exception type으로만 던질 수 있다.
+
+*자주 나오는 예외 처리
+-ArrayIndexOutOfBoundsException : 배열을 사용시 존재하지 않는 index값을 호출하면 발생
+-NullPointerException : 존재하지 않는 객체를 가리킬 때 발생
+-NumberFormatException : 숫자로 변경할 수 없는 문자열을 변경하려고 할 때 발생
+
+/*2020.12.16 작성자: 오준서*/
