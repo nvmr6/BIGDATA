@@ -1,0 +1,44 @@
+17) Java Collection
+:자료구조로서 데이터의 속성에 맞게 저장하는 다양한 구조
+>다수의 데이터를 쉽게 처리할 수 있게하는 메소드를 제공한다. 자료 구조에 따라 관리하는 방식이 달라진다.
+
+1. List 계열
+-ArrayList: 배열과 비슷하고 인덱스가 존재하며 데이터의 중복을 허용
+ex) ArrayList<String> arrayList = new ArrayList<String>();
+	arrayList.add("str0");
+	arrayList.set(2, "str2222");
+	arrayList.remove(2);
+-LinkedList: 접근 시간이 더 빠르지만 추가, 삭제 시간은 오래 걸린다. 불연속적인 데이터를 서로 연결시킨다.
+-Vector: 멀티 스레드 환경에서 안전하다.
+
+2. Map 계열
+:키 값으로 데이터를 엑세스한다. 키와 값만 있고 키를 통해 관리한다.
+1. Hashmap, HashTable
+ex)HashMap<Integer, String> hashmap = new HashMap<Integer, String>();
+hashmap.put(0, "str0");
+hashmap.get(2);
+hashmap.remove(2);
+>데이터 구조 출력시
+Iterator<Integer> iterator = hashmap.keySet().iterator(); //반복자 생성
+	while(iterator.hasNext()){
+		Integer key = iterator.next();
+		String string = hashmap.get(key);
+		System.out.println(key+”번 “+string);
+}
+
+3. Set 계열
+:데이터에 순서는 없고 중복이 허용되지 않는다. 중복 데이터는 equals나 hashcode를 통해 분별한다.
+HashSet<String> hashset = new HashSet<String>();
+		hashset.add("str0");
+-같은 데이터의 새로운 객체가 추가되더라도 클래스에서의 오버라이드를 통해 중복을 방지한다.
+>@Override
+	public boolean equals(Object obj) {
+		String compareString = obj.toString();
+		String thisString = toString();
+		return thisStr.equals(compareStr);
+	}
+@Override
+	public int hashCode() {
+		return toString().hashCode();
+	}
+/*2020.12.17 작성자: 오준서*/
