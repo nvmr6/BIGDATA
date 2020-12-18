@@ -1,0 +1,99 @@
+18) 자바 입출력
+:I/O 입출력, 데이터를 읽고 쓰는 것.
+
+*API
+1. InputStream : 1byte단위 입력 API. 이미지, 동영상 등의 데이터에 주로 사용
+2. OutputStream : 1byte단위 출력 API. 이미지, 동영상 등의 데이터에 주로 사용
+3. Reader : 2byte단위 입력 API. 문자열에 주로 사용
+4. Writer : 2byte단위 출력 API. 문자열에 주로 사용
+5. DataInputStream / DataOutputStream
+6. BufferedReader / BufferedWriter
+7. PrintWriter
+
+1단계: 파일을 연다 > 2단계: 파일을 읽거나 쓴다 > 3단계: 파일을 닫는다
+
+-InputStream
+:추상 클래스를 상속받아 객체를 만들어 사용한다. 
+read(), read(byte[]) 두 개의 메소드를 이용한다.
+예외처리와 close()를 반드시 실행한다.
+ex)
+public class Ex01inputStream-2 {
+	public static void main(String[] args) {
+		InputStream is=null;
+		try {
+			is = new FileInputStream("c:/mega_IT/inTest.txt");
+			byte[] bs = new byte[5];
+			while(true) {
+				int readbyteCnt = is.read(bs);
+				if(readbyteCnt ==-1) break;
+				for(int idx=0 ; idx< readbyteCnt ;idx++) {
+					System.out.print((char)bs[idx]);
+				}
+				
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("파일 못 찾음 : "+e.getMessage());
+		} catch (IOException e) {
+			System.out.println("입출력 예외 : "+e.getMessage());
+		}finally {
+			try {
+				if(is!=null) is.close();
+			}catch (Exception e) {System.out.println(e.getMessage());}
+		}
+		}
+}
+
+-OutputStream 
+:추상 클래스를 상속받아 객체를 만들어 사용한다. 
+write(int), write(byte[]), write(byte[], int, int) 세개의 메소드를 이용한다.
+예외처리와 close()를 반드시 실행한다.
+ex)
+public class Ex03OutputStream {
+	public static void main(String[] args) {
+		OutputStream os = null;
+		try {
+			os = new FileOutputStream("txtFile/outTest.txt",true);
+			//true : append / default는 false
+			String temp = "이번 겨울은 얼마나 추울려나\r\n감기조심하세요\r\n";
+			byte[] bs = temp.getBytes();
+			os.write(bs);
+		} catch (FileNotFoundException e) {
+			System.out.println(e.getMessage()+"파일 못 만들어");
+		} catch (IOException e) {
+			System.out.println(e.getMessage()+"쓰다가 예외");
+		} finally {
+			try {
+				if(os!=null) os.close();
+			}catch (IOException e) { }
+		}
+	}
+}
+-파일 복사하기
+:InputStream, OutputStream 준비 > is로 읽어들인 데이터를 os으로 씀 > 외부연결 close()
+ ex)
+public static void main(String[] args) {
+		InputStream is = null;
+		OutputStream os = null;
+		File file = new File("C:\\a01_prog\\test.txt");
+		try {
+			is = new FileInputStream(file);
+			os = new FileOutputStream("C:\\a01_prog\\t.txt");
+			byte[] bs = new byte[(int) file.length()];
+			int i=0;
+			System.out.println((int) file.length()+"바이트 : "+bs.length);
+			while(true){
+				System.out.println(++i);
+				int count = is.read(bs);
+				if(count==-1) break;
+				os.write(bs, 0, count);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally{
+			try{
+				if(is!=null) is.close();
+				if(os!=null) os.close();
+			}catch (Exception e) {System.out.println(e.getMessage());}
+		}
+	}
+>DataInputStream, DataOutputStream: 속도를 빨리 하기 위한 Data 스트림  
