@@ -1,0 +1,69 @@
+[2]SQL
+
+1.DATABASE
+파일 시스템 : 별도의 구입 비용 없이 사용가능. 속도가 빠름. 저장과 열기 제공
+데이터 베이스 : 데이터의 독립성. 중복의 최소화, 무결성, 공유, 보안관리 제공
+
+>데이터 베이스란 여러 시스템들이 공유하도록 통합, 저장된 운영 데이터 저장소이다.(중복 최소화)
+
+DBMS: 데이터베이스를 관리, 유지하도록 하는 소프트웨어
+
+(1) 데이터의 종속성과 중복성의 문제점을 해결하기 위한 방법으로 제안. 
+    하나의 DBMS에 여러 종류의 응용 프로그램이 공유, 연동될 수 있다.
+(2) 데이터베이스에 대한 사용자의 모든 요구를 수행할 수 있는 기능을 갖도록 하는 각 단계별 
+     구조와 이들 사이의 인터페이스 및 데이터베이스 언어로 구성된 소프트웨어
+(3) 데이터베이스 생성/관리, 데이터로부터 사용자의 질의에 대한 답을 검색하는 프로그램의 집합
+
+>조작 - 검색, 갱신, 삽입, 삭제
+>제어 - 무결성 유지, 보안, 복구, 병행 수행 제어
+
+*데이터베이스는 실시간 처리, 지속적인 변화, 동시공유, 값에 의한 참조, 최소한의 중복 허용등과 같은 특성을 지닌다.
+>	DBA는 데이터베이스를 최적의 상태로 운영, 관리할 책임이 있으며 데이터베이스 사용자들의 요구와 불편 사항을 해결해야 한다.
+
+2. SELECT문
+
+SELECT : 원하는 컬럼 선택
+*	: 테이블의 모든 column 출력
+alias	: 해당 column에 대한 다른 이름 부여
+DISTINCT: 중복 행 제거 옵션
+FROM  : 원하는 데이터가 저장된 테이블 명을 기술
+WHERE : 조회되는 행을 제한하기 위한 조건 추가
+condition : column, 표현식, 상수 및 비교연산자
+ORDER BY:정렬을 위한 옵션 (ASC :오름차순이며 default, DECS 내림차순)
+
+EX)
+SELECT * FROM TAB; --scott이 소유하고 있는 table을 전부 보여줌
+SELECT * FROM dept; dept테이블 데이터 전체 보기
+DESC dept; dept테이블의 구조보기
+SELECT * FROM emp;
+
+-WHERE(조건문)
+-비교 연산자: 같다(=), 크거나같다(>=) 작거나같다(<=) 다르다(<>, ^=, !=), 숫자, 문자, DATE형 모두 가능
+-논리 연산자 AND, OR, NOT
+-산술 표현식: +,-,*,/ 가능, (데이터 값이 없을 시 NULL로 표기 > NULL과 계산시 결과 값 NULL > NVL()함수 이용)
+-연결 연산자: ||, 열이나 문자를 연결
+-중복 제거: DISTINCT를 열 앞에 표기하면 중복 제거
+
+*SQL 연산자
+DISTINCT 필드; 필드 중복제거
+BETWEEN a AND b : a부터 b (a,b값 포함. a가 작은 값) 
+IN(list): list의 값 중 어느 하나와 일치한다
+LIKE pattern: 검색하고자 하는 값을 정확히 모를 경우 pattern과 일치하는지를 검색
+>와일드 카드
+% : 문자가 없거나, 하나 이상의 문자가 어떤 값이 와도 상관없다.
+_ : 하나의 문자가 어떤 값이 와도 상관없다
+
+IS NULL: null값을 가졌다
+NOT : 위의 연산자와 반대 조건
+
+*ORDER
+ASC: 오름차순. Default
+DESC: 내림차순
+ex)
+SELECT *  FROM emp ORDER BY SAL; -- 오름차순 정렬
+SELECT * FROM emp ORDER BY sal ASC; -- ASC 오름차순
+SELECT * FROM emp ORDER BY sal DESC; -- 내림차순 정렬
+SELECT ename, hiredate FROM emp ORDER BY hiredate DESC; -- 내림차순
+SELECT ename, hiredate FROM emp ORDER BY hiredate; -- 오름차순
+>중복시 정렬 조건
+
