@@ -1,0 +1,57 @@
+4. 단일행 함수
+
+(4) 형변환 함수
+
+-TO_CHAR(날짜데이터, ‘출력형식’);
+ex)
+SELECT SYSDATE, TO_CHAR(SYSDATE, 'YYYY-MM-DD DY HH:MI:SS') FROM DUAL; --날짜 변환
+SELECT TO_CHAR(2145008000, 'L99,999,999,999') FROM DUAL; 
+--숫자 변환 0: 자릿수 채움, 9: 자릿수 안 채움, $:숫자 앞에 붙음, L:지역 통화 단위
+
+-TO_DATE : 문자형을 날짜형으로 변환
+ex) SELECT TRUNC(SYSDATE-TO_DATE('2018/01/01', 'YYYY/MM/DD')) FROM DUAL;
+
+(5) NULL 관련 함수
+ex)SELECT ENAME, COMM, NVL(COMM, 0)  FROM EMP; -- NULL시 0으로 출력, 형 일치 필요
+
+(6) DECODE 함수
+형식 : DECODE (표현식, 조건1, 결과1, 조건2, 결과2, 조건3, 결과3, 기본결과n )
+ex)
+SELECT ENAME, DEPTNO, DECODE(DEPTNO,  10, 'ACCOUNTING', 
+                                 20, 'RESEARCH', 
+                                 30, 'SALES', 
+                                 40, 'OPERATIONS' ) AS DNAME FROM EMP; -- 조건에 따라 결과 출력
+
+CASE 표현식 WHEN 조건1 THEN 결과 1
+	     WHEN 조건2 THEN 결과 2
+	     WHEN 조건3 THEN 결과 3
+	     ELSE 결과n
+	     END-- 조건에 따라 결과 출력
+
+5. 그룹 함수
+:하나 이상의 행을 그룹으로 묶어 연산하여 결과로 나타냄
+(1)SUM : 그룹의 누적 합계
+(2)AVG : 그룹의 평균
+(3)COUNT : 그룹의 총 개수
+(4)MAX : 그룹의 최대값
+(5)MIN : 그룹의 최소값
+(6)STDDEV : 그룹의 표준편차
+(7)VARIANCE : 그룹의 분산
+
+-GROUP BY
+:어떤 컬럼 값을 기준으로 그룹함수를 적용할 경우 GROUP 절에 컬럼을 기술
+형식 :     SELECT 컬럼명, 그룹함수
+       	FROM 테이블명
+	WHERE 조건(연산자)
+	GROUP BY 컬럼명;
+>ALIAS 사용 불가능, 모든 칼럼 GROUP절에 표기
+
+-HAVING 조건
+:조건을 사용하여 결과를 제한할 때 그룹의 결과를 제한할 때에는 HAVING 절 사용
+형식: SELECT column, group_function
+	FROM table
+	WHERE condition
+	GROUP BY group_by_expression
+	HAVING   group_condition
+	ORDER BY column;
+
