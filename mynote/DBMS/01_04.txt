@@ -1,0 +1,48 @@
+[10] VIEW TOP-N
+:행과 열로 구성된 가상 테이블로 제한적인 접근을 
+위해 사용된다. 파생된 테이블로 변경시 본 테이블이 변경되고 조인도 가능하다.
+
+>데이터 보안 기능 / 복잡한 질의를 간단하게 표현
+(1) 단순뷰
+:하나의 테이블로 구성, DML 명령문을 실행하여 조작
+ex) CREATE OR REPLACE VIEW EMPV0 
+    AS SELECT * FROM EMP WHERE DEPTNO = 30
+     WITH CHECK OPTION; --제한 조건
+
+(2) 복합뷰
+:하나 이상의 테이블로 구성, 제한적 DML 사용, 함수 사용가능
+ex)CREATE OR REPLACE VIEW EMPV1
+    AS SELECT EMPNO, ENAME, JOB, DNAME FROM EMP E, DEPT D
+    WHERE E.DEPTNO = D.DEPTNO
+    WITH READ ONLY;-- 읽기 전용
+
+>NOT NULL인 컬럼은 모두 포함 / 제한 조건, 읽기 전용 설정
+
+(3) INLINE VIEW
+:FROM 절 상의 서브쿼리 / VIEW처럼 작용
+>SELECT column_list   FROM (Sub Query) alias  WHERE condition
+
+ex) SELECT ENAME, SAL, E.DEPTNO, S.AVG  
+	FROM EMP E, (SELECT DEPTNO, ROUND(AVG(SAL)) AVG FROM EMP GROUP BY DEPTNO) S
+             WHERE SAL > S.AVG AND E.DEPTNO = S.DEPTNO; 
+
+(4) TOP-N
+:컬럼의 값 중 N개의 가장 큰 값 또는 작은 값을 기준으로 질의
+>SELECT [column_list] ROWNUM  -- ROWNUM은 테이블에서 읽어오는 순서
+	FROM (SELECT [column_list] FROM table ORDER BY TOP-N_column)
+	WHERE ROWNUM <= N;
+>데이터를 정렬하는 질의를 서브쿼리나 INLINE 뷰로 생성
+
+ex)SELECT RN, ENAME, SAL 
+	FROM (SELECT ROWNUM RN, ENAME, SAL FROM (SELECT * FROM EMP ORDER BY SAL ))
+	WHERE RN BETWEEN 6 AND 10;
+
+[11] INDEX
+:빠른 검색을 위해 인덱스 사용 > 처리 속도 향상, DML작업은 무거워질 수 있음
+ex) CREATE INDEX INDEX_NAMEON TABLE_NAME(COLUMN_NAME);
+
+[12] TRANSACTION
+:데이터 처리의 논리적인 작업 단위 (COMMIT / ROLLBACK / SAVEPOINT) > ALL-OR-NOTHING 방식
+COMMIT: 모든 작업 처리, ROLLBACK: 모든 작업 취소 SAVEPOINT: 트랜잭션 분할, 지정 위치로 ROLLBACK
+
+/*2021.01.04 작성자: 오준서*/
