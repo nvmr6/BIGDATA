@@ -1,0 +1,42 @@
+[1] My SQL
+:SQL에 기반을 둔 관계형 DBMS 중 하나
+
+-사용자 계정 생성 및 권한 부여
+계정 생성 create user user01 identified by ‘password’;
+권한 부여 grant all on *.* to user01; / grant all privileges on *.* to user01;  / flush privileges;
+권한 박탈 revoke all on *.* from user01;
+계정 삭제 drop user user01;
+
+-데이터베이스
+존재하는 데이터베이스들 목록 보기 : show databases;
+데이터베이스 생성 명령 : create database 데이터베이스명;
+데이터베이스 삭제 명령: drop database 데이터베이스명
+데이터베이스로 들어가기 : use 데이터베이스명
+현재 데이터베이스 select database();
+
+-DDL
+
+자료형
+>Tinyint, smallint, int, integer, float(m,d), double,  char, varchar, BLOB, date, datetime, timestamp, time
+제약조건
+>Unique, primary key, not null, default, foreign key, check
+
+- mysql 컬럼 함수 (단일행 함수) - Oracle 함수와의 차이점
+
+concat: 계속 연결 가능
+그룹함수: from절 생략 가능
+날짜함수:
+year(startdate), month(startdate), monthname(startdate), dayname(startdate) 연,월,요일
+dateformat()
+> ex)
+현재시간 2021/01/05 16:05 
+%y:21 %Y:2021 %M:january %m:01 %b:jan %c:1 %e:5 %d;05 
+%H:16 %h:04 p:pm %i:05 %s:24
+
+format(column, 1): 소수점 한자리수까지 표기
+if(조건문, 참일 경우 결과, 거짓일 경우 결과)
+
+Top-N
+limit 사용 (limit a,b: a번째부터 b개 불러옴, 단 0번째부터 시작)
+
+/*2021.01.05 작성자: 오준서*/
