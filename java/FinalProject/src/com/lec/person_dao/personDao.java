@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class personDao {
 	String driver = "oracle.jdbc.driver.OracleDriver";
@@ -133,6 +134,50 @@ public class personDao {
 			}
 		}
 		return dtos;
-		
-	} 
+	}
+	
+	//직업명 가져오기
+	public Vector<String> jnameList(){
+		Vector<String> jnames = new Vector<String>();
+		jnames.add("");
+		//직업 리스트 add
+		String sql = "SELECT JNAME FROM JOB";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DriverManager.getConnection(url, "scott", "tiger");
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				jnames.add(rs.getString("jname"));
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return jnames;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
