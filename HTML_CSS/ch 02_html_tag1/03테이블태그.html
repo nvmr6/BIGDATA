@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        table{background-color:dimgrey;}
+        tr{background-color:blanchedalmond;}
+        td{padding:5px 10px 5px 10px;}
+        tr:hover{background-color:khaki;}
+        caption{background-color: khaki;}
+    </style>
+</head>
+<body>
+    <table border="1">
+        <caption><em><b>caption</b></em></caption>
+        <tr>
+            <td colspan="2"></td>
+            <!--colspan-->
+            <td>1행3열</td>
+        </tr>
+        <tr>
+            <td>2행1열</td>
+            <td>2행2열</td>
+            <td rowspan="2"></td>
+        </tr>
+        <tr>
+            <td>3행1열</td>
+            <td>3행2열</td>
+            <!--rowspan-->
+        </tr>
+    </table>
+    <br />
+    <table>
+        <caption><b>table ex1</b></caption>
+        <tr>
+            <th>국어</th>
+            <th>영어</th>
+            <th>수학</th>
+        </tr>
+        <tr>
+            <td>100</td>
+            <td>60</td>
+            <td>80</td>
+        </tr>
+    </table>
+    <br>
+    <table>
+        <caption><b>table ex2</b></caption>
+        <tr>
+            <th>국어</th>
+            <th>영어</th>
+            <th>수학</th>
+        </tr>
+        <tr>
+            <td>100</td>
+            <td>60</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <th colspan="2">평균</th>
+
+            <td>80</td>
+        </tr>
+
+    </table>
+    <br>
+    <table>
+        <caption><b>table ex3</b></caption>
+        <tr>
+            <th colspan="2" rowspan="3">중간고사</th>
+
+            <th>국어</th>
+            <th>영어</th>
+            <th>수학</th>
+        </tr>
+        <tr>
+            <td>100</td>
+            <td>60</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <th colspan="2">평균</th>
+
+            <td>80</td>
+        </tr>
+
+    </table>
+</body>
+</html>

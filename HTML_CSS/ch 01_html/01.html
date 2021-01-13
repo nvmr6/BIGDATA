@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!--웹문서의 디자인, 동적부분, 설정부분-->
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        /*디자인*/
+        body {
+            background-color:burlywood;
+            font-size:20px;
+        }
+    </style>
+    <script>
+        name = prompt("what is your name?", "oh");
+        document.write(name + " welcome <br>");
+        function chk() {
+            if (frm.tel.value.length < 4) {
+                alert("4자리 이상 입력");
+                return false;
+            } 
+        }
+    </script>
+</head>
+<body>
+    <!--body에 출력되는 정보-->
+    hello,<br>
+    world.<br>
+    <form action="http://www.naver.com" name="frm" onsubmit="return chk()"><!--태그속성="속성값"-->
+        전화번호 <input type="text" name="tel"><br>
+        <input type="submit" value="search"><br>
+    </form>
+</body>
+</html>
