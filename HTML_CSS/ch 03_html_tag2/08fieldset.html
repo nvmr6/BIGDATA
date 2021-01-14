@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        b{color:red;}
+    </style>
+</head>
+<body>
+    <form>
+        <fieldset>
+            <legend>필수입력</legend>
+            <table>
+                <tr>
+                    <th>
+                        <label for="name">이름<b>*</b></label>
+                    </th>
+                    <th>
+                        <input type="text" name="name" id="name" required="required" autofocus="autofocus" />
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="id">아이디<b>*</b></label>
+                    </th>
+                    <th>
+                        <input type="text" name="id" id="id" required="required" />
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="pw">비밀번호<b>*</b></label>
+                    </th>
+                    <th>
+                        <input type="password" name="pw" id="pw" required="required" />
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="pwch">비밀번호 확인<b>*</b></label>
+                    </th>
+                    <th>
+                        <input type="password" name="pwch" id="pwch" required="required" />
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="tel">전화번호<b>*</b></label>
+                    </th>
+                    <th>
+                        <input type="text" name="tel" id="tel" required="required" />
+                    </th>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>선택입력</legend>
+            <ul>
+                <li>
+                    <label for="tel">전화번호</label>
+                    <input type="text" name="tel" id="tel" />
+                </li>
+                <li>
+                    <label for="email">이메일</label>
+                    <input type="text" name="email" id="email" />
+                </li>
+            </ul>
+            <p><input type="submit" value="입력" /></p>
+        </fieldset>
+    </form>
+</body>
+</html>
