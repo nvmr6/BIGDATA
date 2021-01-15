@@ -1,0 +1,105 @@
+[4] CSS 선택자
+:HTML 문서 중 특정 부분을 선택하여, 해당 부분의 속성을 변경하는 목적으로 사용
+*태그 선택자: 특정 태그를 선택하여 CSS속성을 적용
+
+<style>
+        header, footer{color:blue; border:1px solid gray;/*위우하좌*/}
+        h1{border:1px dashed red;}
+        li, p {color:red;/*글씨색*/ background-color:pink; font-weight:bold;/*글씨굵게*/ }
+        p{color:chocolate;}
+</style>
+
+- *는 문서 전체를 의미
+* { /* 페이지 디자인 초기화할 때 */
+            color:blue; padding:0; /*안여백*/ margin:0; /*밖여백*/
+   }
+
+-tag, id, class 혼합 : tag, id, class를 혼합하여 CSS에서 속성을 설정할 수 있다.
+        #header{
+            width:600px; margin:0 auto;
+            background-color:yellow;
+            text-align:center; /* 가운데 정렬 */
+        }
+        #content{
+            width:350px; /* #content가 필요한 영역=width(350)+border(2)=352px;*/
+            float:left;
+            text-align:center;
+            height:250px;
+        }
+        #footer{
+            clear:both;
+            width:600px; margin:0 auto;
+            background-color:yellow;
+            text-align:center; /* 가운데 정렬 */
+        }
+
+-속성 선택자 : tag의 속성을 선택하여 CSS의 속성을 설정
+(1)선택자[속성] : 지정한 속성을 가지고 있는 요소를 찾아 스타일을 적용
+(2)선택자[속성=값] : 속성 값이 특정값과 같은 경우를 찾아 스타일을 적용
+(3)선택자[속성^=값] : 속성 값이 지정한 문자로 시작하는 속성값에 대해서만 스타일을 적용
+(4)선택자[속성$=값] : 속성 값이 지정한 문자로 끝나는 속성에 대해서만 스타일을 적용
+
+-후손 및 자손 선택자: tag의 속성을 선택하여 CSS의 속성을 설정
+div li : 후손 선택자
+div > p :자손 선택자
+
+-동위 선택자:  태그의 동등한 위치를 판단하여 CSS속성을 설정(+하나만, ~다선택) 
+        h3 ~ div { /*h3태그의 동위 선택자들 다(~)*/
+            font-size:1.3em; color:orange; font-weight:bold;
+        }
+        h3 + div{ /* h3태그의 동위선택자들 중 바로 다음 것*/
+            color:red;
+        }
+
+-반응 선택자: hover상태의 반응에 따른 속성을 설정(:hover)
+tr:hover{background-color:green; color:yellow;}
+
+-상태 선택자: 상태에 따라 CSS속성이 변화하는 설정
+input:focus{ /*상태선택자*/
+            background-color:yellow;
+            border:1px dashed red;
+        }
+        input:disabled{color:blue;}
+        input:enabled{color:green;}
+
+-구조 선택자: 구조에 따라 CSS 속성이 변화하는 설정
+            list-style:none;
+            border:1px solid gray;
+            padding:10px; margin:2px;
+            text-align:center;
+            font-size:20px; font-weight:bold;
+        }
+        #wrap ul li a{
+            text-decoration:none; /* 밑줄을 없애기 */
+            color:black;
+        }
+        #wrap ul li:nth-child(2n+1){
+            background-color:orange;
+        }
+        #wrap ul li:nth-child(2n){
+            background-color:yellow;
+        }
+        #wrap ul li:first-child{
+            /*왼쪽위, 오른쪽위, 오른쪽밑, 왼쪽밑*/
+            border-radius: 20px 20px 0 0;
+        }
+        #wrap ul li:last-child{
+            border-radius:0 0 20px 20px;
+        }
+
+-문자 선택자
+	특정문자 또는 문자열을 선택하여 CSS속성을 설정
+	드래그 되어 있는 문자들의 속성을 설정할 수 있다
+#content p:nth-child(2):first-line, p:nth-child(3):first-line{
+            color:blue; font-weight:bold;
+        }
+        #content p:nth-child(2):first-letter{
+            font-size:2em;
+        }
+
+-링크 선택자 : 문서에 링크(href) 되어 있는 문자를 선택하여, CSS 속성을 설정
+a:link {text-decoration:none; color:green; }
+
+-부정 선택자 : 나를 제외한 모든 태그에 CSS 속성을 적용
+
+/*2021.01.15 작성자: 오준서*/

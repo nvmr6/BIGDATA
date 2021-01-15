@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        #header, #section, #footer{overflow:hidden; width:1000px;}
+        #header .left{width:150px; height:150px; float:left; background-color:lightslategray; border: 1px solid black; border-radius: 20px 0 20px 0;}/*1*/
+        #header .center{width:694px; height:150px; float:left; background-color:lightslategray; border: 1px solid black; border-radius: 0 0 20px 20px;}/*2*/
+        #header .right{width:150px; height:150px; float:left; background-color:lightslategray; border: 1px solid black; border-radius: 0 20px 0 20px;}/*3*/
+        #section .left{width:150px; height:300px; float:left; background-color:lightslategray; border: 1px solid black; border-radius: 0 20px 20px 0;}/*4*/
+        #section .center{width:693px; height:300px; float:left; background-color:lightslategray; border: 1px solid black; border-radius: 20px 20px 20px 20px;}/*5*/
+        #section .right{width:150px; height:300px; float:left; background-color:lightslategray; border: 1px solid black; border-radius: 20px 0 0 20px;}/*6*/
+        #footer .left{width:150px; height:150px; float:left; background-color:lightslategray; border: 1px solid black; border-radius: 0 20px 0 20px;}/*7*/
+        #footer .center{width:694px; height:150px; float:left; background-color:lightslategray; border: 1px solid black; border-radius: 20px 20px 0 0;}/*8*/
+        #footer .right{width:150px; height:150px; float:left; background-color:lightslategray; border: 1px solid black; border-radius: 20px 0 20px 0;}/*9*/
+        #section .center ul{overflow:hidden; }
+        #section .center ul li{list-style:none; float:left; margin:2px; padding:30px;}
+        #section .center ul li a{text-decoration:none; color:black;}
+        #section .center{text-align:center}
+        #section .right ol{padding:30px; margin: 0 auto;}
+        #section .right ol li#red~li{color:red;}
+    </style>
+</head>
+<body>
+    <div id="header">
+        <div class="left"></div>
+        <div class="center"></div>
+        <div class="right"></div>
+    </div>
+    <div id="section">
+        <div class="left"></div>
+        <div class="center">
+            <ul>
+                <li><a href="">menu1</a></li>
+                <li><a href="">menu2</a></li>
+                <li><a href="">menu3</a></li>
+            </ul>
+            <p><h1>빅데이터 UI 전문가 양성</h1></p>
+            <p>본 과정</p>
+        </div>
+        <div class="right">
+            <ol>
+                <li>태그</li><li>전체(*)</li><li>id, class</li><li>속성</li>
+                <li>후손, 자손</li><li>동위</li><li>반응</li><li>상태</li>
+                <li id="red">구조</li><li>문자</li><li>링크</li><li>부정</li>
+            </ol>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="left"></div>
+        <div class="center"></div>
+        <div class="right"></div>
+    </div>
+</body>
+</html>
