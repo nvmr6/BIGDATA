@@ -1,0 +1,69 @@
+[5] CSS properties
+
+-CSS단위
+>  #content1 p:nth-child(2n){background-color:#eeeeee;}
+    #content1 p:nth-child(1){font-size: 1em;}
+    #content1 p:nth-child(2){font-size:16px;}
+    #content1 p:nth-child(3){font-size:100%;}
+
+-url():백그라운드 이미지로 사용
+>background-image:url('sul.jpg');
+
+-백그라운드 이미지 속성
+background-position: left top;  배경 이미지를 어디에 위치시킬 것인 조정
+background-position:right top; left(왼쪽정렬x축) right(오른쪽정렬x축)
+background-position:left center; top(위쪽정렬y축) bottom(아래쪽정렬y축)
+background-position:center; 
+background-position:50%; 
+background-size:50%; 사이즈 조절
+background-repeat:repeat; 반복 
+
+-diplay  속성
+block : div태그 p태그 li태그 - 높이의 속성이 있다.
+inline : span태그 - 높이의 속성이 없다.
+inline-block : block의 속성을 갖고 옆으로 붙여 나가는 것 - 높이의 속성이 있다.
+
+-visibility 속성
+visibility:hidden은 공간은 확보, 안보임
+display:none은 공간도 사라짐
+
+-opacity 속성
+opacity:0.5: 투명도 조절
+
+-margin 및 padding 속성 
+margin: 10px 10px 10px 10px; >외부여백
+padding: 10px 10px 10px 10px; >내부여백
+
+-box-sizing 속성
+box-sizing: border-box; /* 보더를 박스안으로*/
+box-sizing:content-box; /* 보더를 박스밖으로(디폴트)*/
+
+-border style
+border-width:10px;
+border-bottom-style:dashed;
+border-left-style:solid;
+border-top-style:double;
+border-color: green;
+border-left-color:black;
+border-top: 5px solid blue;
+
+-글자관련
+:font-family(글꼴) / font-size(크기) / font-style(이텔릭체), 
+font-weight(진하게)
+line-height(행간격 조정용도나 세로축에 대한 정렬 용도),
+text-align(글자에 대한 정렬),
+text-decoration(간단한 글꼴 모양의 속성)
+
+-position 속성
+absolute 속성값 
+fixed 속성값 > 스크롤 해도 화면상에서 움직이지 않고 고정
+static 속성값 > 블럭형태로 쌓아간다.
+relative 속성값 
+relative와 absolute > 안쪽에 absolute가 있으면 밖은 relative
+z-index > 큰 값이 위로 표현
+> 혼합 사용
+
+-웹 폰트 
+: 인터넷만 연결되어 있다면, 다양한 폰트를 웹사이트 
+방문자에게 제공할 수 있도록 고안된 폰트가 웹폰트 입니다. 웹사이트를 
+방문하는 순간, 웹 폰트를 다운받아 웹사이트를 구성 합니다.
