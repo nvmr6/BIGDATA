@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" name="viewport"
+          content="width=device-width, initial-scale=1.0"/>
+    <title></title>
+    <style>
+        *{margin:0; padding:0; font-family:'Times New Roman', Times, serif;}
+        body{min-width:980px;}
+        a{text-decoration:none;}
+        li{list-style:none;}
+
+        #header{
+            height:100px; line-height:100px;
+            padding-left:10px; background-color:rebeccapurple;
+            color:white; font-weight:bold; font-size:2em;
+        }
+
+        #gnb{overflow:hidden; background-color:#222222;
+             height:80px; line-height:80px;
+        }
+        #gnb ul:first-child{float:left;}
+        #gnb ul:last-child{float:right;}
+        #gnb ul li{float:left; width:140px;
+                   border-right:1px solid gray;
+                   box-sizing:border-box;
+                   text-align:center;
+        }
+        #gnb ul:last-child li:first-child{border-left:1px solid gray;}
+        #gnb ul li a{color:white; font-size:1.5em; display:block;}
+
+        #section{overflow:hidden; background-color:#e1e262;}
+            #section #lnb{float:left; width:200px;}
+            #section #lnb ul li a{
+                padding:20px; display:block; font-size:1.3em;
+                text-align:center; font-weight:bold;
+                color:brown; border-bottom:1px dashed brown;
+            }
+            #section #content_wrap{
+                float:left; width:100%; margin-right:-200px;/*lnb 200px*/
+                background-color:darkseagreen;
+            }
+            #section #content_wrap #content{padding: 20px 220px 20px 20px;}
+                #section #content_wrap #content div{
+                    margin-bottom:30px; overflow:hidden;
+                }
+                #section #content_wrap #content div img{border-radius:10px;}
+                #section #content_wrap #content div:nth-child(1) img{
+                    float:left; margin-right:20px;
+                }
+                #section #content_wrap #content div:nth-child(2) img{
+                    float:right; margin-left:20px;
+                }
+                #section #content_wrap #content div p:first-line{
+                    font-size:1.3em;
+                    color:orangered;
+                }
+                #section #content_wrap #content div p:first-letter{
+                    font-size:1.5em; font-weight:bold;
+                }
+                #section #content_wrap #content div:nth-child(4){
+                    border-top:1px dashed gray;
+                    padding-top:10px;
+                }
+                #section #content_wrap #content div:nth-child(4) img{
+                    float:left; margin:10px;
+                }
+                #section #content_wrap #content div:nth-child(4) img:nth-child(3){
+                    margin-right:20px;
+                }
+
+                #footer{
+                    background-color:lightblue;
+                    height:100px; text-align:center;
+                }
+                #footer p:first-child{font-weight:bold; font-size:1.5em; padding:20px 0 10px 0;}
+                
+    </style>
+</head>
+<body>
+    <div id="header">
+        <p>Website for Tablet PC</p>
+    </div>
+    <div id="gnb">
+        <ul>
+            <li><a href="">Gnb1</a></li>
+            <li><a href="">Gnb2</a></li>
+            <li><a href="">Gnb3</a></li>
+            <li><a href="">Gnb4</a></li>
+            <li><a href="">Gnb5</a></li>
+        </ul>
+        <ul>
+            <li><a href="">Gnb6</a></li>
+            <li><a href="">Gnb7</a></li>
+        </ul>
+    </div>
+    <div id="section">
+        <div id="lnb">
+            <ul>
+                <li><a href="">Btn1</a></li>
+                <li><a href="">Btn2</a></li>
+                <li><a href="">Btn3</a></li>
+                <li><a href="">Btn4</a></li>
+                <li><a href="">Btn5</a></li>
+                <li><a href="">Btn6</a></li>
+                <li><a href="">Btn7</a></li>
+                <li><a href="">Btn8</a></li>
+                <li><a href="">Btn9</a></li>
+            </ul>
+        </div>
+        <div id="content_wrap">
+            <div id="content">
+                <div>
+                    <h1>Where ca I get some?</h1>
+                    <img src="0121_imgTab/100.jpg" alt="img"/>
+                    <p>
+                        Contrairement à une opinion répandue, le Lorem Ipsum n'est pas simplement du 
+                        texte aléatoire. Il trouve ses racines dans une oeuvre de la littérature latine 
+                        classique datant de 45 av. J.-C., le rendant vieux de 2000 ans. Un professeur du 
+                        Hampden-Sydney College, en Virginie, s'est intéressé à un des mots latins les plus 
+                        obscurs, consectetur, extrait d'un passage du Lorem Ipsum, et en étudiant tous les 
+                        usages de ce mot dans la littérature classique, découvrit la source incontestable du 
+                        Lorem Ipsum. Il provient en fait des sections 1.10.32 et 1.10.33 du "De Finibus Bonorum 
+                        et Malorum" (Des Suprêmes Biens et des Suprêmes Maux) de Cicéron. Cet ouvrage, très 
+                        populaire pendant la Renaissance, est un traité sur la théorie de l'éthique. Les premières 
+                        lignes du Lorem Ipsum, "Lorem ipsum dolor sit amet...", proviennent de la section 1.10.32.
+                        L'extrait standard de Lorem Ipsum utilisé depuis le XVIè siècle est reproduit ci-dessous pour 
+                        les curieux. Les sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" de Cicéron sont 
+                        aussi reproduites dans leur version originale, accompagnée de la traduction anglaise de H. Rackham.
+                    </p>
+                </div>
+                <div>
+                    <h1>Where ca I get some?</h1>
+                    <img src="0121_imgTab/100.jpg" alt="img" />
+                    <p>
+                        Contrairement à une opinion répandue, le Lorem Ipsum n'est pas simplement du
+                        texte aléatoire. Il trouve ses racines dans une oeuvre de la littérature latine
+                        classique datant de 45 av. J.-C., le rendant vieux de 2000 ans. Un professeur du
+                        Hampden-Sydney College, en Virginie, s'est intéressé à un des mots latins les plus
+                        obscurs, consectetur, extrait d'un passage du Lorem Ipsum, et en étudiant tous les
+                        usages de ce mot dans la littérature classique, découvrit la source incontestable du
+                        Lorem Ipsum. Il provient en fait des sections 1.10.32 et 1.10.33 du "De Finibus Bonorum
+                        et Malorum" (Des Suprêmes Biens et des Suprêmes Maux) de Cicéron. Cet ouvrage, très
+                        populaire pendant la Renaissance, est un traité sur la théorie de l'éthique. Les premières
+                        lignes du Lorem Ipsum, "Lorem ipsum dolor sit amet...", proviennent de la section 1.10.32.
+                        L'extrait standard de Lorem Ipsum utilisé depuis le XVIè siècle est reproduit ci-dessous pour
+                        les curieux. Les sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" de Cicéron sont
+                        aussi reproduites dans leur version originale, accompagnée de la traduction anglaise de H. Rackham.
+                    </p>
+                </div>
+                <div>
+                    <h1>Where ca I get some?</h1>
+                    <img src="0121_imgTab/100.jpg" alt="img" />
+                    <p>
+                        Contrairement à une opinion répandue, le Lorem Ipsum n'est pas simplement du
+                        texte aléatoire. Il trouve ses racines dans une oeuvre de la littérature latine
+                        classique datant de 45 av. J.-C., le rendant vieux de 2000 ans. Un professeur du
+                        Hampden-Sydney College, en Virginie, s'est intéressé à un des mots latins les plus
+                        obscurs, consectetur, extrait d'un passage du Lorem Ipsum, et en étudiant tous les
+                        usages de ce mot dans la littérature classique, découvrit la source incontestable du
+                        Lorem Ipsum. Il provient en fait des sections 1.10.32 et 1.10.33 du "De Finibus Bonorum
+                        et Malorum" (Des Suprêmes Biens et des Suprêmes Maux) de Cicéron. Cet ouvrage, très
+                        populaire pendant la Renaissance, est un traité sur la théorie de l'éthique. Les premières
+                        lignes du Lorem Ipsum, "Lorem ipsum dolor sit amet...", proviennent de la section 1.10.32.
+                        L'extrait standard de Lorem Ipsum utilisé depuis le XVIè siècle est reproduit ci-dessous pour
+                        les curieux. Les sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" de Cicéron sont
+                        aussi reproduites dans leur version originale, accompagnée de la traduction anglaise de H. Rackham.
+                    </p>
+                </div>
+                <div>
+                    <img src="0121_imgTab/150.jpg" alt="img" />
+                    <img src="0121_imgTab/150.jpg" alt="img" />
+                    <img src="0121_imgTab/150.jpg" alt="img" />
+                    <p>
+                        Plusieurs variations de Lorem Ipsum peuvent être trouvées ici ou là, mais la majeure partie d'entre 
+                        elles a été altérée par l'addition d'humour ou de mots aléatoires qui ne ressemblent pas une seconde à 
+                        du texte standard. Si vous voulez utiliser un passage du Lorem Ipsum, vous devez être sûr qu'il n'y a rien
+                        d'embarrassant caché dans le texte. Tous les générateurs de Lorem Ipsum sur Internet tendent à reproduire le 
+                        même extrait sans fin, ce qui fait de lipsum.com le seul vrai générateur de Lorem Ipsum. Iil utilise un dictionnaire 
+                        de plus de 200 mots latins, en combinaison de plusieurs structures de phrases, pour générer un Lorem Ipsum 
+                        irréprochable. Le Lorem Ipsum ainsi obtenu ne contient aucune répétition, ni ne contient des mots farfelus, ou des touches d'humour.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <p>주식회사</p>
+        <p>copyright ⓒtjoeun co., All right reserved.</p>
+    </div>
+</body>
+</html>
