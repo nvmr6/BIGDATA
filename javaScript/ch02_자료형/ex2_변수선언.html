@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var varString;
+        document.write('varString의 타입 ' + typeof varString + '<br>');
+        var varString = 'qqqq';
+        document.write('varString의 타입 ' + typeof varString +': '+ varString+'<br>');
+        var varString = 24;
+        document.write('varString의 타입 ' + typeof varString + ': ' + varString + '<br>');
+        var varString = true;
+        document.write('varString의 타입 ' + typeof varString + ': ' + varString + '<br>');
+        var varString = function () {
+            alert('function')
+        };
+        document.write('varString의 타입 ' + typeof varString + ': ' + varString + '<br>');
+        varString = {name:'홍길동', age:34};//객체
+        document.write('varString의 타입 ' + typeof varString + ': ' + varString + '<br>');
+        var varString = [10, '홍길동', function () { }, true, {name:'홍길동', age:23}, [1,2,3]];//배열
+        document.write('varString의 타입 ' + typeof varString + ': ' + varString + '<br>');
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        document.write('<table>');
+        document.write('<caption><h2>2~9단</h2></caption></tr>')
+        for (var i = 2; i <= 9; i++) {
+            document.write('<th>' + i + '단 </th>');
+        }
+        document.write('</tr>');
+
+        for (var i = 1; i <= 9; i++) {
+            document.write('<tr>');
+            for (var j = 2; j <= 9; j++) {
+                document.write('<td>'+j + ' x ' + i + ' = ' + (j * i)+'</td>');
+            }
+            document.write('<tr>');
+        }
+        document.write('</table>');
+    </script>
+    <style>
+        td{padding:2px;}
+    </style>
+</head>
+<body>
+    
+</body>
+</html>

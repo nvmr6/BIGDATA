@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        function chk() {
+            var num1 = Number(frm.num1.value);
+            var num2 = Number(frm.num2.value);
+            var sub = (num1 > num2) ? (num1 - num2) : (num2 - num1);
+
+            if (num1 == num2) {
+                var result = "<p>same</p>";
+            } else if (num1 > num2) {
+                var result = "<p>첫번째수가" + sub + "만큼 크다</p>";
+            } else if (num1 > num2) {
+                var result = "<p>두번째수가" + sub + "만큼 크다</p>";
+            }
+            document.body.innerHTML += result;
+            newResult = result.substring(0, result.indexof('</p>'));
+            newResult = newResult.substring(3);
+            frm.num1.value = num1;
+            frm.num2.value = num2;
+            alert(newResult);
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <form name="frm" onsubmit="return chk()">
+        <fieldset>
+            <table>
+                <tr>
+                    <td>수1</td>
+                    <td><input type="text" name="num1" /></td>
+                </tr>
+                <tr>
+                    <td>수2</td>
+                    <td><input type="text" name="num2" /></td>
+                </tr>
+            </table>
+            <input type="submit" value="결과" />
+        </fieldset>
+    </form>
+</body>
+</html>

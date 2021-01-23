@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var num;
+        while (isNaN(num) || num < 2 || num > 9) {
+            num = Number(prompt('단수 입력', '2 ~ 9 입력'));
+        }
+        document.write('<h2>'+num+'단</h2>')
+        for (var i = 1; i <= 9; i++) {
+            document.write(num + ' x ' + i + ' = ' + (num * i)+'<br>');
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

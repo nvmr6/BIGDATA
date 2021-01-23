@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        do {
+            var korScore = prompt('국어 점수 입력', '0-100');
+            kor = Number(korScore);
+            if (korScore!=null && kor != '' && !isNaN(kor) && kor >= 0 && kor <= 100) { break; }
+        } while (true);
+        do {
+            var engScore = prompt('영어 점수 입력', '0-100');
+            eng = Number(engScore);
+            if (engScore != null && eng != '' && !isNaN(eng) && eng >= 0 && eng <= 100) { break; }
+        } while (true);
+        document.write('평균: ' + (kor + eng) / 2);
+    </script>
+</head>
+<body>
+
+</body>
+</html>
