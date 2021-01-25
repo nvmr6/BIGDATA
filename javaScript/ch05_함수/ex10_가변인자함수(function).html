@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var arr1 = array();
+        var arr2 = array(3);
+        var arr3 = array(2, 3, 4);
+        document.write(arr1 + arr1.length + '<br>');
+        document.write(arr2 + arr2.length + '<br>');
+        document.write(arr3 + arr3.length + '<br>');
+        //인자 0:빈 배열 / 인자 1: 방의 갯수가 인자 / 인자 2 이상: 인자 자체가 배열
+        function array() { //arguments 예약어
+            var result = [];
+            if (arguments.length == 1) {//인자 1개
+                for (var cnt = 1; cnt <= arguments[0]; cnt++) {
+                    result.push('');//매개변수만큼 push 반복 수행(빈 배열)
+                }
+            } else if (arguments.length >= 2) {//인자 2개
+                for (var cnt = 0; cnt < arguments.length; cnt++) {
+                    result.push(arguments[cnt]);
+                }
+                /*for(var cnt in arguments){
+                    result.push(arguments[cnt]);
+                }*/
+                /*arguments.forEach(function (data){
+                       result.push(data);
+                 })*/
+                 
+            }
+            return result;
+        };
+    </script>
+</head>
+<body>
+
+</body>
+</html>

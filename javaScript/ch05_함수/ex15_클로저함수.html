@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        function test(name) {
+            var msg = 'Hello, ' + name + '님.';
+            return function () { alert(msg);};//클로저 함수
+        }
+        var fun = test('hong');
+        fun();
+
+        test('kim')();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

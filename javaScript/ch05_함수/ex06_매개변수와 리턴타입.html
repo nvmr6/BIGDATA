@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var i = Number(prompt('i: ', '0'));
+        var j = Number(prompt('j: ', '0'));
+        document.write('i(' + i + ')의 j(' + j + ')승은' + pow(i, j));
+        document.write('pow(2,3,4,5) = ' + pow(2, 3, 4, 5));//더 많은 매개변수 무시 
+        document.write('pow(2) = ' + pow(2));// 더 적은 매개변수 undefined
+        function pow(x, y) {
+            var result = 1;
+            for (var temp = 1; temp <= y; temp++) {
+                result *= x;
+            }
+            return result;
+        };
+    </script>
+</head>
+<body>
+
+</body>
+</html>

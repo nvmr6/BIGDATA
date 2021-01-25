@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        //A
+        function pythagoras(width, height) {
+            function square(x) {return x * x;}//내부 함수
+            return Math.sqrt(square(width) + square(height));
+        }
+    </script>
+    <script>
+        //B
+        function square(width, height, hypotenuse) {
+            if (width * width + height * height == hypotenuse * hypotenuse) {
+                return true;
+            }else {
+                return false;
+            }
+        }
+    </script>
+    <script>
+        alert(pythagoras(3, 4));
+    </script>
+</head>
+<body>
+
+</body>
+</html>
