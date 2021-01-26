@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        function makeStudent(name, kor, eng, mat, sci) {
+            var resultObj = {
+                name: name,
+                kor: kor,
+                eng: eng,
+                mat: mat,
+                sci: sci,
+                getSum: function () {
+                    return this.kor + this.eng + this.mat + this.sci;
+                },
+                getAvg: function () {
+                    return this.getSum() / 4;
+                },
+                toString: function () {
+                    var output = '';
+                    for (var key in this) {
+                        if (key != 'toString' && key != 'getSum' && key != 'getAvg') {
+                            output += key + ': ' + this[key] + '\t';
+                        } else if (key == 'getSum' || key == 'getAvg') {
+                            output += key.substring(3) + ': ' + this[key]() + '\n';
+                        }
+                    }
+                    return output;
+                },
+            };//resultObj
+            return resultObj;
+        }//makeStudent
+        var students = [
+            makeStudent('hong', 100, 98, 54, 78),
+            makeStudent('hong', 100, 98, 54, 78),
+            makeStudent('hong', 100, 98, 54, 78),];
+        students.push(makeStudent('hong', 100, 98, 54, 78));
+
+        students.forEach(function (data, idx) {
+            document.write(idx+1 + '번: ' + data + '<hr>');
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

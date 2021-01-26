@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        /*
+        function Rectangle(width, height) {
+            this.width = width;
+            this.height = height;
+        }
+        Rectangle.prototype.getArea = function () {
+            return this.width * this.height;
+        };
+        var rect = new Rectangle(5, 7);
+        document.write('가로: ' + rect.width + ' 세로: ' + rect.height + '<br>');
+        document.write('넓이: ' + rect.getArea());
+        */
+        //캡슐화
+        function Rectangle(w, h) {
+            if (w < 0) {
+                throw '음수 가로';//예외 발생
+            } else {
+                var width = w;
+            }
+            if (h < 0) {
+                throw '음수 높이';//예외 발생
+            } else {
+                var height = h;
+            }
+            //외부접근 불가능
+            this.getWidth = function () { return width; };
+            this.setWidth = function (w) {
+                if (w < 0) {
+                    throw '음수 가로';//예외 발생
+                } else {
+                    var width = w;
+                }};
+            this.getHeight = function () { return height; };
+            this.setHeight = function (h) {
+                if (h < 0) {
+                    throw '음수 높이';//예외 발생
+                } else {
+                    var height = h;
+                }};
+        }
+        Rectangle.prototype.getArea = function () {
+            return this.getWidth() * this.getHeight();//직접 쓸 수 없다
+        }
+        try {
+            var rect = new Rectangle(5, 7);
+        } catch (e) {
+            location.href = 'ex03-1_예외 페이지.html';
+        }
+        document.write(rect.getWidth() + ', ' + rect.getHeight() + ' > ' + rect.getArea() + '<br>');
+        try {
+            rect.setWidth(7); rect.setHeight(-1);//예외발생            
+        } catch (e) {
+            location.href = 'ex03-1_예외 페이지.html';
+        }
+        document.write(rect.getWidth() + ', ' + rect.getHeight() + ' > ' + rect.getArea() + '<br>');
+    </script>
+</head>
+<body>
+
+</body>
+</html>

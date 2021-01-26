@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var student = { name: 'hong', kor: 93, eng: 76, mat: 88, sci: 96, }
+
+        var output = '';//윈도우 객체 안의 output
+        with (student) {
+            window.output += '이름: ' + student.name + '<br>';
+            window.output += '국어: ' + student.kor + '<br>';
+            window.output += '영어: ' + student.eng + '<br>';
+            window.output += '수학: ' + student.mat + '<br>';
+            window.output += '과학: ' + student.sci + '<br>';//윈도우 객체 안의 output
+        }
+        document.write(output);
+        document.write('name' in student);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var person = {
+            name: 'hong', age: 24,
+            eat: function (food) {
+                alert(this.age + '살 ' + this.name + '은 ' + food + '를 먹는다.');//this
+            }
+        };
+        person.eat('pizza');
+        document.write('person: ' + person + '<br>');
+        
+    </script>
+</head>
+<body>
+
+</body>
+</html>

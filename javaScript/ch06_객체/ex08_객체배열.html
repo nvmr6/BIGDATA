@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var students = [];
+        students.push({ 'name': 'hong', kor: 77, eng: 88, mat: 99, sci: 87 });
+        students.push({ 'name': 'shin', kor: 46, eng: 94, mat: 54, sci: 47 });
+        students.push({ 'name': 'jung', kor: 76, eng: 87, mat: 76, sci: 86 });
+        for (var idx in students) {
+            students[idx].hobby = 'marathon';
+            students[idx].getSum = function () {
+                return this.kor + this.eng + this.mat + this.sci;
+            };
+            students[idx].getAvg = function () {
+                return this.getSum()/4;
+            };
+            students[idx].toString = function () {
+                var output = '';
+                for (var key in this) {
+                    if (key != 'toString' && key != 'getSum' && key != 'getAvg') {
+                        output += key + ': ' + this[key] + '\n';
+                    } else if (key == 'getSum' || key == 'getAvg') {
+                        output += key.substring(3) + ': ' + this[key]()+'\n';
+                    }
+                }
+                return output;
+            };
+        }
+        //for문
+        var output = '';
+        for (var idx = 0; idx < students.length; idx++) {
+            output += students[idx];
+        }
+        alert(output);
+        //document.write(output.replace('\n', '<br>'))
+        function replaceAll(output, oldStr, newStr) {
+            return output.split(oldStr).join(newStr);
+        }
+        document.write(replaceAll(output, '\n', '<br>'));
+        //for-in문
+        for (var idx in students) {
+            document.write(students[idx] + '<br>');
+        }
+        //for-each문
+        students.forEach(function (data, idx) {
+            document.write(idx+1 + ': ' + data + '<br>');
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

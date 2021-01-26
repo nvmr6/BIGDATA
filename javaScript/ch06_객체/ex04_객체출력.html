@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var product = {
+            'name': 'microsoft', 'price': 0,
+            'language': 'kor', 'supportOS': 'win 32/64',
+            'method': function () { alert('method'); }
+        }
+        for (var key in product) {
+            if (key != 'method') {
+                document.write(key + ': ' + product[key] + '<br>');
+            }
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

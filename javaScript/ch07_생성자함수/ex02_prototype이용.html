@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        function Student(name, kor, eng, mat, sci) {
+            this.name = name;
+            this.kor = kor;
+            this.eng = eng;
+            this.mat = mat;
+            this.sci = sci;
+        }//공통된 함수는 프로토타입 공간으로 뺀다.
+
+        Student.prototype.getSum = function () {
+            return this.kor + this.eng + this.mat + this.sci;
+        };
+        Student.prototype.getAvg = function () {
+            return this.getSum() / 4;
+        };
+        Student.prototype.toString = function () {
+            var output = '';
+            for (var key in this) {
+                if (key != 'toString' && key != 'getSum' && key != 'getAvg') {
+                    output += key + ': ' + this[key] + '<br>';
+                } else if (key == 'getSum') {
+                    output += '총점: ' + this.getSum() + '<br>';
+                } else if (key == 'getAvg') {
+                    output += '평균: ' + this.getAvg() + '<br>';
+                }
+            }
+            return output;
+        };//프로토타입 내 함수
+
+        var students = [];
+
+        students.push(new Student('hong', 67, 76, 54, 67));
+        students.push(new Student('kim', 34, 48, 84, 96));
+        students.push(new Student('lee', 34, 76, 76, 88));
+        students.push(new Student('han', 64, 78, 52, 34));
+        students.push(new Student('jung', 27, 71, 95, 35));
+        students.forEach(function (data) {
+            document.write(data + '<hr>');
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
