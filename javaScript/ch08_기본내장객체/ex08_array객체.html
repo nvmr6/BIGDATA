@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var arr1 = new Array('asd', 'qwe', 'fgh');
+        var arr2 = [154, 634, 57, 39, 124];
+        document.write('arr1 정렬 전' + arr1 + '<br>');
+        document.write('arr1 정렬 후' + arr1.sort() + '<br>');
+        document.write('arr2 정렬 전' + arr2 + '<br>');
+        arr2.sort(function (left, right) {
+            return left - right;//오름차순 정렬
+        })
+        document.write('arr2 정렬 후' + arr2 + '<br>');
+        arr2.reverse(); //요소 뒤집기
+        document.write('arr2 정렬 후' + arr2 + '<br>');
+        var sliceArr2 = arr2.slice(0, 3);//0인덱스부터 3인덱스 앞까지
+        document.write('arr2 정렬 후' + sliceArr2 + '<br>');
+    </script>
+</head>
+<body>
+
+</body>
+</html>

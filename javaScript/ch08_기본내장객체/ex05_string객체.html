@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var str = 'abc@abc@abc'; //String 내장 객체와 같다
+        document.write('글자 길이: ' + str.length + '<br>');
+        document.write('글자 추가: ' + str.concat('@def') + '<br>');
+        document.write('글자 추출: ' + str.substring(3, 5) + '<br>');
+        document.write('글자 인덱스 이후 추출: ' + str.substr(4, 3) + '<br>');
+        document.write('앞부터 일치하는 위치: ' + str.indexOf('c') + '<br>');
+        document.write('뒤부터 일치하는 위치: ' + str.lastIndexOf('c') + '<br>');
+        document.write('글자 대치: ' + str.replace('@', '$') + '<br>');
+        String.prototype.splitJoin = function (oldStr, newStr) {
+            return this.split(oldStr).join(newStr);
+        };
+        document.write('글자 대치: ' + str.splitJoin('@', '$') + '<br>');
+        document.write('스페이스 삭제: ' + str.trim() + '<br>');
+        document.write('대문자: ' + str.toUpperCase() + '<br>');
+        document.write('소문자: ' + str.toLowerCase() + '<br>');
+        document.write('글자 길이: ' + str.split('@').length + '<br>');
+    </script>
+    
+</head>
+<body>
+
+</body>
+</html>

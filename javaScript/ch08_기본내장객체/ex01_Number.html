@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var priNumber = 273.21;
+        var obj = new Number(273.21);
+        document.write(typeof (priNumber) + '<br>');
+        document.write(typeof (obj) + '<br>');//객체
+        document.write(priNumber.toFixed(1) + '<br>');//객체가 아니지만 가능
+        document.write(obj.toFixed(1) + '<br>');//가능
+        document.write(priNumber.constructor + '<br>');//생성시 생성자 함수 출력
+        document.write(obj.constructor + '<br>');//생성시 생성자 함수 출력
+        //타입은 다르지만 메모리상 같게 잡힌다.
+        if (priNumber.constructor == obj.constructor) {
+            document.write('same');//저장된 타입은 같다.
+        } else {
+            document.write('different');
+        }
+        //내장객체에 메소드 추가
+        Number.prototype.method1 = function () { alert('Number type'); };
+        priNumber.method1();
+        obj.method1();
+        obj.method2 = function () {
+            alert('obj');
+        }
+        //priNumber.method2(); 사용 불가
+        obj.method2();
+        priNumber.method3 = function () {
+            alert('pri');
+        }
+        priNumber.method3();//객체가 아니기 때문에 메소드 추가 불가
+    </script>
+</head>
+<body>
+
+</body>
+</html>

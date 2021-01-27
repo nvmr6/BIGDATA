@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var cnt = 0;
+        for (var key in window) {
+            if (key == 'onload' || key == 'cnt') {
+                document.write(key + ', ' + window[key] + '<br>');
+            }
+        }
+        window.onload = function () { alert('window load'); };
+
+        for (var key in window) {
+            if (key == 'onload' || key == 'cnt') {
+                document.write(key + ', ' + window[key] + '<br>');
+            }
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

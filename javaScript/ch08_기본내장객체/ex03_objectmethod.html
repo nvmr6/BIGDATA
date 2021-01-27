@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var numLiteral = 273;
+        var numObject = new Number(273);
+        document.write('number와 Number의 type, constructor<br>')
+        document.write((numLiteral.constructor == numObject.constructor) ? 'same' : 'different');
+        //메모리상 같은 Number 타입으로 잡힌다
+        var obj = { property: 273, name: 'hong' };
+        var output = '';
+        output += "hasOwnProperty('name')" + obj.hasOwnProperty('name') + '<br>';
+        output += "반복문으로 열거" + obj.propertyIsEnumerable('name') + '<br>';
+        output += obj.toString();
+        document.write('<hr>' + output);
+        for (var i in obj) {
+            document.write(i + ': ' + obj[i]);
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>
