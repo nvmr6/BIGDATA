@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        function login() {
+            var id = document.getElementsByTagName('id')[0].value;//배열
+            var pw = document.getElementsByTagName('pw')[0].value;
+            var m = document.getElementsByTagName('gender')[0].value;
+            var f = document.getElementsByTagName('gender')[1].value;
+            if (m.checked) {
+                alert('남' + id + '님 - ' + pw);
+            } else if (f.checked) {
+                alert('여' + id + '님 - ' + pw);
+            } else {
+                alert('선택하시오.');
+            }
+        }        
+    </script>
+</head>
+<body>
+    <h1>로그인</h1>
+    <p>ID<input type="text" name="id" /></p>
+    <p>ID<input type="text" name="pw" /></p>
+    <p>
+        ID<input type="radio" name="gender" value="m" />
+        ID<input type="radio" name="gender" value="f" />
+    </p>
+    <p><button onclick="login()">로그인</button></p>
+</body>
+</html>

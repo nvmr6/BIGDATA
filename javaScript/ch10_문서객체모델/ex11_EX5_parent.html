@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        #wrap {
+            width: 300px;
+            margin: 50px auto;
+            text-align: center;
+        }
+    </style>
+    <script>
+        function check() {
+            var child = open('ex11_EX5_child.html', '', 'width = 600, height=700, left=100');
+            if (!child) {
+                alert('popup limit');
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="wrap">
+        <p>
+            아이디
+            <input type="text" id="id" />
+            <button id="check" onclick="check()">중복확인</button> 
+        </p>
+    </div>
+</body>
+</html>

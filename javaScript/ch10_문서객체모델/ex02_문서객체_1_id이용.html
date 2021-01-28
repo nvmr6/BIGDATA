@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var id, header1, header2;
+        var toggle1 = 0, toggle2 = 0;
+        window.onload = function () {
+            header1 = document.getElementById('header-1');
+            header1.innerHTML = 'time';
+            header2 = document.getElementById('header-2');
+            header2.innerHTML = new Date().toLocaleString();
+            id = setInterval(function () {
+                header2.innerHTML = new Date().toLocaleString();
+            }, 1000);
+        };
+        function change(n) {
+            if (n == 1) {
+                if (toggle1 == 0) {
+                    header1.innerHTML = 'change';
+                    toggle1 = 1;
+                } else {
+                    header1.innerHTML = 'time';
+                    toggle1 = 0;
+                }
+            } else if (n == 2) {
+                if (toggle2 == 0) {
+                    header2 = document.getElementById('header-2');
+                    header2.innerHTML = 'change';
+                    clearInterval(id);
+                    toggle2 = 1;
+                } else {
+                    header2 = document.getElementById('header-2');
+                    header2.innerHTML = new Date().toLocaleString();
+                    id = setInterval(function () {
+                        header2.innerHTML = new Date().toLocaleString();
+                    }, 1000);
+                    toggle2 = 0;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1 id="header-1">HEADER-1</h1>
+    <h1 id="header-2">HEADER-2</h1>
+    <button onclick="change(1)">num1</button>
+    <button onclick="change(2)">num2</button>
+</body>
+</html>

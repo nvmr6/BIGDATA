@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        span{color:red;}
+    </style>
+    <script>
+        window.onload = function () {
+            document.querySelector('h1').onclick = function () {
+                this.innerHTML += '<br><span>$</span>';
+                //클릭이벤트는 한번으로 제한
+                this.onclick = null;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Like</h1>
+</body>
+</html>

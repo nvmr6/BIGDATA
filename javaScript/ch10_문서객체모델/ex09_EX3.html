@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        table {
+            width: 280px;
+            height: 100px;
+            margin: 0 auto;
+        }
+        h3{text-align:center; color:white;}
+    </style>
+    <script>
+        var color = ['red', 'orange', 'yellow', 'green',
+                    'blue', 'navy', 'violet'];
+        window.onload = function () {
+            var td = document.querySelectorAll('td');
+            for (var idx in td) {
+              td[idx].style.cssText = 'background-color:' + color[idx];
+            }
+        };
+        function fontcolorChange(idx) {
+            var caption = document.querySelector('caption');
+            caption.style.color = 'white';
+            document.body.style.backgroundColor = 'black';
+
+            var h3 = document.createElement('h3');
+            var textNode = document.createTextNode('Thursday');
+            h3.append(textNode);
+            document.body.append(h3);
+            h3.style.color = color[idx];
+        };
+        function reset() {
+                var caption = document.querySelector('caption');
+                caption.style.color = 'black';
+                document.body.style.backgroundColor = 'white';
+                var h3 = document.querySelector('h3');
+                document.body.removeChild(h3);
+        };
+    </script>
+</head>
+<body>
+    <table>
+        <caption>color table</caption>
+        <tr onmouseout="reset()">
+            <td onmouseover="fontcolorChange(0)"></td>
+            <td onmouseover="fontcolorChange(1)"></td>
+            <td onmouseover="fontcolorChange(2)"></td>
+            <td onmouseover="fontcolorChange(3)"></td>
+            <td onmouseover="fontcolorChange(4)"></td>
+            <td onmouseover="fontcolorChange(5)"></td>
+            <td onmouseover="fontcolorChange(6)"></td>
+        </tr>
+    </table>
+</body>
+</html>

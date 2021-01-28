@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        #wrap {
+            width: 300px;
+            margin: 50px auto;
+            text-align: center;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var id = opener.document.getElementById('id').value;
+            var idchk = document.getElementById('idchk');
+            idchk.value = id;
+        }
+        function use() {
+            var idchk = document.getElementById('idchk').value;
+            opener.document.getElementById('id').value = idchk;
+            close();
+        }
+    </script>
+</head>
+<body>
+    <div id="wrap">
+        <p>
+            아이디
+            <input type="text" id="idchk" />
+            <button id="check">체크</button>
+        </p>
+        <p><button id="use" onclick="use()">아이디 사용</button></p>
+    </div>
+</body>
+</html>

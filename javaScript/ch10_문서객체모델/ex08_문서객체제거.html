@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        function append() {
+            /*var h1 = document.createElement('h1');
+            var textNode = document.createTextNode('HEADER');
+            h1.append(textNode);
+            document.body.append(h1);*/
+            document.body.innerHTML += '<h1>HEADER</h1>'
+        };
+        function remove() {
+            var h1 = document.querySelectorAll('h1');
+            for (var i = 0; i < h1.length; i++) {
+                document.body.removeChild(h1[i]);
+            }
+        };
+    </script>
+</head>
+<body>
+    <button onclick="remove()">header 제거</button>
+    <button onclick="append()">header 추가</button>
+    <h1>HEADER</h1>
+    <h1>HEADER</h1>
+    <h1>HEADER</h1>
+</body>
+</html>

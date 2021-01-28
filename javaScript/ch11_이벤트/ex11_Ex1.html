@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        table {
+            width: 500px;
+            margin: 50px auto;
+            background-color: darkgreen;
+        }
+
+        td {
+            background-color: white;
+            padding: 50px;
+            text-align: center;
+        }
+    </style>
+    <script>
+        window.onkeydown = function () {
+            var td = document.querySelectorAll('td');
+            if (event.keyCode >= 48 && event.keyCode <= 56) {
+                td[event.keyCode - 48].style.backgroundColor = 'yellow';
+            } else if (event.keyCode >= 96 && event.keyCode <= 104) {
+                td[event.keyCode - 96].style.backgroundColor = 'red';
+            }
+        };
+        window.onkeyup = function () {
+            var td = document.querySelectorAll('td');
+            if (event.keyCode >= 48 && event.keyCode <= 56) {
+                td[event.keyCode - 48].style.backgroundColor = 'white';
+            } else if (event.keyCode >= 96 && event.keyCode <= 104) {
+                td[event.keyCode - 96].style.backgroundColor = 'white';
+            }
+        };
+    </script>
+</head>
+<body>
+    <table>
+        <tr><td>0</td><td>1</td><td>2</td></tr>
+        <tr><td>3</td><td>4</td><td>5</td></tr>
+        <tr><td>6</td><td>7</td><td>8</td></tr>
+    </table>
+</body>
+</html>

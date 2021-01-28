@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>index</title>
+    <script>
+        window.onload = function () {
+            var h1 = document.createElement('h1');//태그에 관련된 객체 생성
+            var textNode = document.createTextNode('추가 텍스트');
+            //생성된 텍스트 노드를 h1에 연결
+            h1.appendChild(textNode);
+            //h1을 바디에 연결
+            document.body.appendChild(h1);
+            //img태그 생성 - src속성 지정 - 바디에 연결
+            var img = document.createElement('img');
+            img.setAttribute('src', "ch10_img/orange.jpg");
+            img.setAttribute('alt', "add orange");
+            document.body.appendChild(img);
+            document.body.innerHTML += '<h1>add</h1>'
+        };
+    </script>
+</head>
+<body>
+    <h1>Text Node</h1>
+    <img src="ch10_img/orange.jpg" alt="orange"/>
+</body>
+</html>

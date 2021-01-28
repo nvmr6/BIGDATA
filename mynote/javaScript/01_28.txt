@@ -1,0 +1,126 @@
+[10] 문서 객체 모델
+:넓은 의미로 HTML 페이지를 인식하는 방식, 좁은 의미로 document객체와 관련된 객체의 집합
+
+*트리 모양의 문서 객체 모델로 나타낼 수 있고 각 요소를 노드라 부른다.
+>동적인 문서 객체 만들기
+
+1.Document 객체의 노드 생성
+createElement(tagName: 요소 노드 생성
+createTextNode(text): 텍스트 노드 생성
+
+2.문서 객체 연결
+appendChild(node): 객체에 노드 연결
+
+ex)
+window.onload = function () {
+            //노드 생성
+            var header = document.createElement('h1');
+            var textNode = document.createTextNode('Hello DOM');
+            //노드 연결
+            header.appendChild(textNode);
+            document.body.appendChild(header);
+}   
+
+3. 문서 객체 가져오기
+1)id로 가져오기
+:getElementById(id);
+>var header1 = document.getElementById('header-1');
+
+2)클래스로 가져오기
+:getElementsByClassName(“class명”) 
+>var clock = document.getElementsByClassName('clock');
+
+3)이름으로 가져오기
+:getElementsByName(name);
+>var idVal = document.getElementsByName("id")[0].value;
+
+4)태그이름으로 가져오기
+:getElementsByTagName(‘태그명’);
+>var headers = document.getElementsByTagName('h1');
+
+5)선택자로 가져오기
+:document.querySelector(선택자) ; 선택자로 가장 처음 선택되는 문서 객체를 가져온다
+:document.querySelectorAll(선택자); 선택자로 선택되는 문서 객체를 배열로 가져옵니다
+>var h1 = document.querySelectorAll(‘h1’); //배열로 받음
+  var h = document.querySelector(‘h1’); // 처음것만 하나 받음
+
+4.문서 객체 제거
+:removeChild(child)
+>function remove() { // h1태그들 싹 없애기
+            var header = document.getElementById('header');
+            document.body.removeChild(header);
+  }
+
+
+[11]이벤트
+:자바 스크립트에서 DOM을 통해 동적인 화면처리를 위해 처리하는 내용
+>마우스 이벤트, 키보드 이벤트, HTML 프레임 이벤트, HTML 입력 양식 이벤트, 유저 인터페이스 이벤트, 구조 변화 이벤트, 터치 이벤트
+ex) onclick, onmouseover, onmouseout, onkeyup(키보드의 특정키를 클릭했다가 손가락을 벗어났을 때, event.keyCode 해당키를 눌렀을 때 고유 코드값..)
+
+*이벤트 연결
+:window객체의 onload 속성에 함수 할당
+>window.onload = function () {
+            var header = document.getElementById('header');
+            function whenClick() { alert('Click'); }
+            header.onclick = whenClick;
+ }
+>header 객체의 이벤트 이름은 click, 이벤트 속성은 onclick, 이벤트리스너는 whenClick()함수
+
+*이벤트 모델
+1)인라인 모델
+>function whenClick() {
+      alert('click');
+ }
+
+2)기본 모델
+>    window.onload = function () {
+      var header = document.getElementById('header');
+      function whenClick() { alert('click'); }
+      header.onclick = whenClick;
+      };
+> click 이벤트  onclick 이벤트 속성명, whenClick 이벤트 리스너
+
+3)고전적 모델
+>    window.onload = function () {
+      var header = document.getElementById('header');
+      header.onclick = function () {
+        alert('click');
+      };
+};
+4)표준 모델
+>window.onload = function () {
+      var header = document.getElementById('header');
+      header.addEventListener('click', function () {
+        alert('click');
+      });
+ };
+
+*이벤트 강제실행
+ex)
+            btnA.onclick = function () {
+                counterA.innerHTML = Number(counterA.innerHTML) + 1;
+            };
+            btnB.onclick = function () {
+                counterB.innerHTML = Number(counterB.innerHTML) + 1;
+                btnA.onclick(); //강제 이벤트 발생
+            };
+
+*디폴트 이벤트 제거
+ex)
+window.onload = function () {
+      var btn = document.getElementById('btn');
+      btn.onclick = function () {
+        alert('경고창 한번만 떠');
+        btn.onclick = null; // 한번 실행 후 이벤트 제거
+      };
+    };
+
+*event keycode
+:누르는 키보드에 대한 코드
+
+
+
+
+
+
+

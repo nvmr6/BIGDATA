@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        window.onload = function () {
+            var header = document.getElementsByClassName('header');
+            for (var i in header) {
+                //클릭한 헤더의 글자 변경
+                header[i].onclick = function () {
+                    //클릭 이벤트가 발생된 컴포넌트 객체
+                    this.style.color = 'orange';
+                };
+            }
+        };
+    </script>
+</head>
+<body>
+    <h1 class="header">click1</h1>
+    <h1 class="header">click2</h1>
+</body>
+</html>

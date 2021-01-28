@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        window.onkeyup = function () {
+            var p = document.querySelector('p');
+            if (event.keyCode >= 48 && event.keyCode <= 57) {
+                p.innerHTML += ' > ' + (event.keyCode - 48) + ' 아스키 코드: ' + event.keyCode + '<br>';
+            } else if (event.keyCode >= 96 && event.keyCode <= 105) {
+                p.innerHTML += ' > ' + (event.keyCode - 96) + ' 아스키 코드: ' + event.keyCode + '<br>';
+            }
+        };
+    </script>
+</head>
+<body>
+    <p></p>
+</body>
+</html>

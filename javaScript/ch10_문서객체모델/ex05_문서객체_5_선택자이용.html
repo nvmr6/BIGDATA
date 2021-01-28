@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        window.onload = function () {
+            //선택자 한개
+            var header1 = document.querySelector('.header');
+            header1.innerHTML = 'change';
+            //선택자 모두
+            var head = document.querySelectorAll('.header');//배열
+            for (var i in head) {
+                head[i].style.color = 'green';
+                head[i].style.cssText = 'background-color: purple;';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1 class="header">HEADER1</h1>
+    <h1 class="header">HEADER2</h1>
+</body>
+</html>
