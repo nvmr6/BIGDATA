@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $('document').ready(function () {
+            $('img').mouseover(function () {
+                var str = $(this).attr('src');
+                str = str.substring(0, 5) + 'over.jpg';
+                $(this).attr('src', str); 
+                $(this).attr('alt', 'clicked');
+            });
+            $('img').mouseout(function () {
+                var str = $(this).attr('src');
+                str = str.substring(0, 5) + 'out.jpg';
+                $(this).attr('src', str);
+                $(this).attr('alt', 'normal');
+            });
+        });
+    </script>
+</head>
+<body>
+    <img src="img/0out.jpg" alt="normal" />
+    <img src="img/1out.jpg" alt="normal" />
+    <img src="img/2out.jpg" alt="normal" />
+    <img src="img/3out.jpg" alt="normal" />
+</body>
+</html>

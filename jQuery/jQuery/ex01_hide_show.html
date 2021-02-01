@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('*').css('color', 'blue').css('margin', '20px');
+            $('p').click(function () {
+                //콜백함수
+                $(this).hide();
+            });
+            $('#hideP1').click(function () {
+                $('#p1').hide();
+            });
+            $('#hideP').click(function () {
+                $('p').hide();
+            });
+            $('#showP').click(function () {
+                $('p').show();
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>HEADER</h1>
+    <p>hide</p>
+    <p>hide</p>
+    <p id="p1">this p tag</p>
+    <button id="hideP1">hide the p</button>
+    <button id="hideP">hide all p</button>
+    <button id="showP">show all p</button>
+</body>
+</html>

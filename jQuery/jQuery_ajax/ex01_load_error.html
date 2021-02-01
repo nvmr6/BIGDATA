@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('button').click(function () {
+                $('#div1').load('emo_test.txt .p1',
+                    function (responseTxt, statusTxt, xhr) {
+                        //responseTxt:요청 성공시 가져올 데이터
+                        //statusTxt: 요청상태(success, error)
+                        //xhr: XMLHttpRequest 객체
+                        if (statusTxt == 'success') {
+                            alert('success');
+                        } else {
+                            alert('fail' + statusTxt + xhr.status + xhr.statusText);
+                            //xhr.status: 404
+                            //xhr.statusText: error type
+                        }
+                    });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="div1">
+        <h2>Ajax EX</h2>
+    </div>
+    <button>외부파일 가져오기</button>
+</body>
+</html>

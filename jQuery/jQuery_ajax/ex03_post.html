@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('button').click(function () {
+                //post('filename',전달될 파라미터들, callback )
+                var mid = $('#mid').val();
+                $.post('idConfirm.html', { mid: mid, },
+                    function (data, status) {
+                        if (status == 'success') {
+                            $('#result').html(data);
+                        } else {
+                            alert('fail');
+                        }
+                    }
+                );
+            });
+        });
+    </script>
+</head>
+<body>
+    <p>
+        아이디
+        <input type="text" name="mid" id="mid" />
+        <button>중복 확인</button>
+    </p>
+    <span id="result"></span>
+</body>
+</html>

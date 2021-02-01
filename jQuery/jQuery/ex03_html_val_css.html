@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(function () {
+            $('#msg').html('<b>Hello, JQ</b>');
+            $('input[name="msg"]').val('Hello, JQ');//value에 넣는 함수
+            var msgH = $('#msg').html();//value 가져오기 <b>Hello, JQ</b>
+            var msgT = $('#msg').text();//value 가져오기 Hello, JQ
+            var msgV = $('input[type="text"]').val(); //value 가져오기 Hello, JQ
+
+            $('input[type="text"], input[type="password"]').focus(function () {
+                $(this).css('background-color', 'yellow');
+            });
+            $('input[type="text"], input[type="password"]').blur(function () {
+                $(this).css('background-color', 'white');
+            });
+        });
+    </script>
+</head>
+<body>
+    <p id="msg"></p>
+    <p>message<input type="text" name="msg" /></p>
+    <p>password<input type="password" name="pw" /></p>
+    <p><input type="radio" /></p>
+    <p><input type="checkbox" /></p>
+</body>
+</html>

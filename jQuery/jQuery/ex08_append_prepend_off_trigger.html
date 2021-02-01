@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var h1Cnt = 0, h2Cnt = 0;
+            $('#h1').click(function () {
+                h1Cnt++;
+                if (h1Cnt < 6) {
+                    $(this).prepend('$').css('color', 'gold');
+                    $(this).append('$').css('color', 'gold');
+                } else {
+                    $('h1').off();
+                }
+            });
+            $('#h2').click(function () {
+                $(this).prepend('W').css('color', 'gold');
+                $(this).append('W').css('color', 'gold');
+            });
+            setInterval(function () {
+                $('#h1').trigger('click');//강제 이벤트 발생
+            }, 1000);
+        });
+    </script>
+</head>
+<body>
+    <h1 id="h1">start1</h1>
+    <h1 id="h2">start2</h1>
+</body>
+</html>

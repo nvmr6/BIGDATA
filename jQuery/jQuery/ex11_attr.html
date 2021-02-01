@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        table td{width:200px; height:200px; background-color:#AAFFAA; border-radius:100px;}
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('td').click(function () {
+                var who = $(this).attr('class');//속성값 가져오기
+                $('.result').html('당신은 ' + who + ' 선택');
+            });
+        });
+    </script>
+</head>
+<body>
+    <table>
+        <tr><td class="p1">p1</td><td class="p2">p2</td></tr>
+        <tr><td class="p3">p3</td><td class="p4">p4</td></tr>
+    </table>
+    <p class="result"></p>
+</body>
+</html>
