@@ -1,0 +1,161 @@
+[3] 데이터 종류 및 구조
+데이터 속성
+: 명명식-명목 척도를 나타내며 이름으로 명명
+, 순서식-서열 척도를 나타내며 순서가 있는 명명식
+, 구간식-간격 척도를 나타내며 간격을 측정할 수 있는 순서식
+, 비율식-비율 척도를 나타내며 절대 영점이 존재해 비율이 의미 있는 구간식
+
+변수 타입
+:연속형-연속적인 값
+, 이산형-값의 개수가 정해진 값
+, 범주형-연속형 변수를 구간으로 묶어 이산형
+
+*특이값: 정상적이지 않은 데이터 / 결측값: 아직 측정되지 않은 값
+
+1) 기본 데이터 타입
+:문자(기본값:"" / ''), 숫자(기본값:0), 논리(기본값:FALSE)
+
+class(): 함수의 타입
+str(): 객체의 내부 구조를 간결하게 표시
+*NULL: 값이 없음 / NA: 결측치, 측정되지 않음 / NaN: 숫자가 아님 / Inf: 무한으로 큰 값
+is.na(d)
+complete.cases(d) # is.na와 반대
+na.omit(d) #결측치 제외
+na.pass(d) # 모두 출력
+
+2)팩터
+:범주형 변수, 미리 정해진 여러 개의 값중 하나의 값을 가짐
+ex)gender <- factor(c('m', 'm', 'f'), levels=c('m', 'f'))
+gender1 <- as.factor(gender1) #팩터형으로 변경
+ordered(): 순서식 데이터
+nlevels(): 범주의 수
+levels(): 범주의 목록
+
+3)벡터
+:여러 개의 동일한 형태의 데이터를 모아서 함께 저장되는 집합
+> c() 안에 인자들을 나열, 한가지 유형의 스칼라
+length(), NROW(): 벡터의 길이
+%in%: 벡터에 포함되었는지
+
+#1) character()
+charArr <- character(5) #length가 5인 벡터
+is.vector(charArr)
+#2) numeric()
+numArr <- numeric(5) #length가 5인 벡터
+is.vector(numArr)
+#3) logical()
+logArr <- logical(2) #length가 2인 벡터
+is.vector(logArr)
+#4)seq(): 순서 객체
+a <- seq(from=1,to=10, by=2)
+is.vector(a)
+#5) rep(): 반복 객체
+rep(1:4, 2)
+
+-벡터의 결합
+(z <- c(a,b,c)) # 타입 변경
+(a <- append(a,c(4,5,6))) 
+
+- 벡터의 집합 연산(합, 교, 차, 비교)
+a <- c(1,2,3,4,5,6)
+b <- c(2,4,6)
+union(a,b) #합집합
+intersect(a,b) #교집합합
+setdiff(a,b) #차집합
+setdiff(b,a) #차집합
+setequal(a,b) #비교 연산
+
+4)리스트
+:복합 구조형의 벡터에 해당하는 데이터 타입
+> 키와 값을 갖는 연관 배열
+ex)student <- list(name='hong', age=25)
+출력
+student$name
+student[1]
+student[[1]]
+
+5)행렬
+:행과 열을 갖는 2차원 배열
+>matrix()
+-byrow: 우선 채우기(열 우선으로 채워짐)
+-dimnames(): 행과 열에 명칭 부여
+-ncol(), nrow(): 행렬의 차원
+-사칙연산가능
+-행렬 곱 : %*%
+- t():전치 행렬
+-solve(): 역행렬
+
+ex) 단변량 회귀분석
+x <- c(2,4)
+y <- c(40,60)
+X <- matrix(c(x,rep(1,NROW(x))), nrow = 2, ncol = 2)
+Y <- matrix(y,ncol = 1)
+#X %*% ab = Y
+(ab <- solve(X) %*% Y)
+ab[1]
+ab[2]
+lines(x, ab[1]*x+ab[2])
+
+ex) 단변량 회귀분석(전치행렬 활용)
+x <- c(32,64,96,118,126,144,152.5,158)#독립변수
+y <- c(18,24,61.5,49,52,105,130.3,125)#종속변수
+X <- matrix(c(x, rep(1,NROW(x))), ncol=2)
+Y <- matrix(y,ncol=1)
+#정방행렬이 아니기 때문에 역행렬 불가 > 전치 행렬 이용
+t(X)
+t(X) %*% X # 2*8 %*% 8*2 = 2*2
+(ab <- solve(t(X) %*% X) %*% t(X) %*% Y)
+plot(x,y)
+lines(x, ab[1]*x+ab[2])
+
+ex) 다변량 회귀분석
+x1 <- c(60,65,55) #몸무게
+y1 <- c(5.5,5.0,6.0) #키
+z1 <- c(1,0,1) #흡연유무
+y <- c(66,74,78) #결과
+X <- matrix(c(x1,y1,z1), ncol = 3)
+Y <- matrix(y, ncol = 1)
+ab <- solve(X) %*% Y
+
+6)배열
+:3차원 이상의 데이터를 다룰 경우 사용
+dataArr <- array(data, dim=c(행,열,면))
+
+7)데이터 프레임
+:2차원 구조이며, 복합형 데이터 타입, 열 단위로 고유한 타입을 가질 수 있음
+ex)
+student_id <- c('20211','20212','20213','20214')
+student_name <- c('hong', 'kim', 'lee', 'jung')
+student_kor <- c(87,98,65,47)
+student_eng <- c(48,31,98,44)
+student_gender <- c('남', '여','남', '여')
+(student_data <- data.frame(student_id, student_name, student_kor, student_eng, student_gender))
+
+-열 추가
+student_data$student_mat <- c(78,98,56,77)
+-열 삭제
+student_data$mat <- NULL
+-행 합치기
+ rbind 
+-열 합치기
+cbind 
+-부분 데이터 조회
+subset(student, subset=(student$student_mat>=90))
+head(student, 3), tail(student, 3)
+
+8)타입 변환
+>as.*함수 이용
+-문자열 길이: nchar()
+-벡터의 길이: length()
+-문자열 연결: paste()
+-하위 문자열 추출: substr()
+-구분자로 문자열 분할: strsplit(string, delimiter(구분자))
+-하위 문자열 대체
+sub(old, new, string): 첫번째 하위 문자열
+gsub(old, new, string): 모든 하위 문자열
+-문자열의 모든 쌍별 조합 만들기
+outer(str1, str2, function, sep)
+
+9)날짜
+-현재 날짜: sys.Date()
+-문자열 > 날짜: as.Date() > yyyy-mm-dd
