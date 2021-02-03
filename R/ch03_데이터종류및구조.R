@@ -317,3 +317,14 @@ strsplit(path, '/')
 s <- "Curly is smart, Curly is funny, too"
 sub('Curly', 'Eric', s)
 gsub('Curly', 'Eric', s)
+
+#outer 문자열의 모든 쌍별 조합
+a <- c('aa', 'bb', 'cc')
+b <- c('11', '22', '33')
+outer(a,b, FUN="paste")
+
+#날짜
+Sys.Date()
+thatDay = as.Date("2021-04-30")
+class(thatDay)
+
