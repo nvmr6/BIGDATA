@@ -1,0 +1,173 @@
+[5]데이터 전처리
+문자셋: 하나의 언어권에서 사용하는 언어를 표현하기 위한 모든 문자의 모임
+인코딩: 문자셋을 컴퓨터가 이해할 수 있는 바이트와의 매핑 규칙
+
+-Sys.getLocale(): 인코딩 정보 확인
+
+1. write.table
+:파일 쓰기
+ex)write.table(iris, file='outData/iris.csv', sep=',', row.names = FALSE)
+
+2.read.table
+:파일 읽기
+ex)irisData <- read.table('outData/iris.csv',sep = ',', header = TRUE)
+
+*csv
+-write.csv
+write.csv(iris, file='outData/irisCsv.csv')
+- read.csv
+irisCSV <- read.csv('outData/irisCsv.csv')
+
+3. cat()
+:분석 결과등 저장
+ex) cat(irisSummary[i,], '\n', file='outData/irisSummary.txt', append=T) 
+
+
+4. apply
+
+1)apply
+:계열 함수를 이용하면 반복문 사용보다 코드 최소화 , 수행속도 빠름
+apply(데이터, 1, 함수) 1은 행별 함수 수행, 2는 열별 함수 수행
+ex
+apply(iris[,1:4], 1, mean)# 행별 평균
+apply(iris[,1:4], 2, mean)# 열별 평균
+
+2) lapply 
+: list apply  함수를 적용한 결과를 list 로 반환
+ex) lapply(x, mean) 
+
+3) sapply 
+: lappply 와 유사하나 결과를 리스트 대신 행렬 , 벡터로 반환
+ex)sapply(x, mean)
+
+4) vapply 
+: sapply 와 유사하나 FUN 의 모든 값이 FUN.VALUE 와 호환되는지 확인
+>미리 지정된 유형의 반환값을 가지므로 사용하는 것이 더 안전하다
+ex)vapply(i39, fivenum, FUN.VALUE = c(numeric(1), numeric(1), numeric(1), numeric(1), numeric(1)))
+
+5) mapply 
+: sapply 와 유사하나 , 여러 개 인자를 함수에 전달할 수 있다
+ex)mapply(rep, x=1:4, times=4:1)
+
+6) tapply 
+: 그룹별 처리를 위한 apply 대상은 list
+ex) tapply(iris$Sepal.Length, iris$Species, mean)
+
+7) by 
+: 데이터프레임 대상 tapply 함수
+ex)by(cust[,2], cust$job, mean)
+
+5. doBy 패키지
+:다양한 유틸리티 기능 포함, 그룹별 요약 통계를 위한 계산용
+>install.packages("doBy")- 설치
+require(doBy) -로드
+
+6.summaryBy
+:그룹별로 특징 짓는 통계적 요약 값 계산에 사용(2개 이상의 함수 가능)
+ex)summaryBy(iris[,-5] ~ Species,iris, FUN=c(sd,mean))
+
+7.orderBy()
+:데이터 프레임의 특정 변수로 데이 프레임의 행 정렬
+ex)
+orderBy(~Sepal.Length, data=iris)#오름차순
+orderBy(~-Sepal.Length, data=iris)#내림차순
+
+8.sampleBy
+:함수에 의해 데이터 프레임은 포뮬러의 변수에 따라 분할 > 특정 비율의 샘플 추출
+ex)
+sampleBy(~Species, data=iris, frac = 0.2)# 종별로 20% 표본 임의추출
+sampleBy(~Species, data=iris, frac = 0.2, replace = T) # 복원 추출
+sampleBy(~Species, data=iris, frac = 0.1, systematic = T)#계층적 추출 (주기적)
+
+9.formula
+:선형 회귀를 맞추기 위한 lm()과 물류 회귀를 위한 glm()은 포뮬러 구문을 사용하여 통계 모델의 형식 지정 (선형 회귀식 도출 함수)
+> 응답 변수 ~ 예측 변수
+ex)
+x <- c(1,2,3,4,5) #공부량-독립
+y <- c(20,41,59,81,99)#점수-종속 > lm() 이용
+(fit <- lm(y ~ x)) #회귀분석모델
+plot(x,y, col='blue')
+abline(fit, lty='dashed')
+
+10. split
+:데이터별로 데이터 프레임 분리
+ex)(iris.species <- split(iris, iris$Species)) # list 형태로 분리
+
+11. rbind(행결합), cbind(열결합)
+:데이터셋 결합
+
+12. merge()
+:데이터 프레임 병합
+ex) student.a <- data.frame(name=c('lee', 'kim'), kor=c(100,90))
+student.b <- data.frame(name=c('lee', 'kim'), eng=c(80,70), mat = c(80,90))
+(student <- merge(student.a, student.b))
+
+13.sort(), order()
+:벡터나 팩터 정렬
+ex)
+sort(data) 오름차순
+sort(iris$Sepal.Length, decreasing = T) 내림차순
+>정렬된 데이터 반환
+
+order(iris$Sepal.Length, decreasing = T) #인덱스
+>정렬된 데이터 인덱스 반환
+
+14. with, within
+:expr을 평가하는 함수 > 데이터 프레임 생략에 이용
+
+ex)
+#데이터 프레임 이름 생략
+iris.with <- with(iris.temp,{
+  mps <- tapply(Sepal.Length, Species, median, na.rm=T)
+  Sepal.Length <- ifelse(is.na(Sepal.Length), mps[Species], Sepal.Length)
+})#대치된 결과값 반환
+
+iris.temp <- within(iris.temp,{
+  mps <- tapply(Sepal.Length, Species, median, na.rm=T)
+  Sepal.Length <- ifelse(is.na(Sepal.Length), mps[Species], Sepal.Length)
+})#대치된 데이터 프레임 셋 반환
+
+
+15. attach, detach
+:데이터 객체가 검색 경로에 추가 > 데이터 프레임 이름 생략
+ex)
+attach(iris)
+#이하는 iris$ 생략 가능
+summary(Species)
+detach(iris)
+
+16. table
+:교차 분류 계수를 사용하여 각 팩터 수준의 조합마다 수의 표를 작서
+>데이터를 팩터로 묶을 수 있는 가능한 모든 쌍의 조합을 카운트 한 수의 표를 만듦
+
+ex)
+emp$deptno <- factor(emp$deptno, levels = c(10,20,30,40))
+str(emp)
+table(emp$deptno)
+같음
+
+17.aggregate
+:데이터를 하위 집합으로 분할하고 각각에 대한 요약 통계 계산
+ex)
+ust.id <-c(1005,1002,1003,1004,1005,1001,1005,1002,1003,1005)
+hos.day <- c(2,3,20,5,13,0,8,2,3,16)
+data <- data.frame(cust.id, hos.day)
+daypercust <- aggregate(data$hos.day, by=list(data$cust.id), sum)
+
+*차이점
+aggregate(data$hos.day, by=list(data$cust.id), sum)#대상열 1개 이상 가능
+tapply(data$hos.day, data$cust.id, sum) #대상열 1개 가능
+summaryBy(hos.day~cust.id, data=data, FUN=c(sum, mean))#2개 이상 함수 사용 가능
+
+18.which
+:조건으로 인덱스 찾기
+ex)
+iris[which(iris$Species=='setosa'),]        
+iris[which.max(iris$Sepal.Length),]        
+
+
+
+
+
+
+
