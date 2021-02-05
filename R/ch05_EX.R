@@ -2,6 +2,8 @@
 (v1 <- c(1:10))
 ###각 원소 값들에 2를 곱한 결과로 벡터 v2 를 만든다.
 (v2 <- v1*2)
+###v2 에서 5번째 원소를 제외하고 v3 라는 변수에 저장한다.
+(v3 <- v2[-5])
 ###v2 에서 최대값을 추출하여 max_v 에 저장한다.
 (max_v <- max(v2))
 ###v2 에서 최소값을 추출하여 min_v 에 저장한다.
@@ -10,8 +12,6 @@
 (avg_v <- mean(v2))
 ###v2 에서 합을 추출하여 sum_v 에 저장한다.
 (sum_v <- sum(v2))
-###v2 에서 5번째 원소를 제외하고 v3 라는 변수에 저장한다.
-(v3 <- v2[-5])
 ###v1, v2, v3, max_v, min_v, avg_v, sum_v를 화면에 출력한다.
 v1
 v2
@@ -30,9 +30,9 @@ sum_v
 ###m1 에서 최소값을 추출하여 m_min_v 에 저장한다.
 (m_min_v <- min(m1))
 ###m1 에서 행 단위의 최대값을 추출하여 row_max 에 저장한다.
-(row_max <- max(m1[c(1:3),]))
+(row_max <- apply(m1,1,max))
 ###m1 에서 열 단위의 최대값을 추출하여 col_max 에 저장한다.
-(col_max <- max(m1[,c(1:5)]))
+(col_max <- apply(m1,2,max))
 ###m1, m2, m_max_v, m_min_v, row_max, col_max를 화면에 출력한다.
 m1
 m2
@@ -48,7 +48,7 @@ rep(1,5)
 ###(3) 1, 2, 3, 1, 2, 3, 1, 2, 3
 rep(c(1:3),3)
 ###(4) 1, 1, 2, 2, 3, 3, 4, 4
-rep(1:4, c(2,2,2,2))
+rep(1:4, each=2)
 #[문제4] 1부터 10 까지 출력하는데 3씩 증가 되는 형태로(1 4 7 10)저장되는 벡터를 정의하여 v3 변수에 저장한다.(또한 각각 값마다 "A", "B", "C", D" 라는 이름을 부여한다.)
 v3 <- seq(1,10,3)
 names(v3) <- c('A', 'B','C','D')
@@ -56,7 +56,7 @@ v3
 #[문제5] 1부터 100으로 구성되는 7개의 중복되지 않는 데이터를 추출하여 count 라는 백터를 만든다. 
 ###week.korname 이라는 이름으로 “일요일”, “월요일”,…”토요일” 값으로 벡터를 만든다. 
 ###다음 형식으로 구성되는 벡터를 생성하여 출력한다.
-count <- c(15,78,39,64,95,55,36)
+count <- sample(1:100,7)
 week.korname <- c('일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일')
 ###추출된 값이 – 21, 40, 11, 55, 70, 90, 30 이라면 다음과 같이 출력한다.
 ###일요일 : 21   월요일 : 40   화요일 : 11 ……………..   토요일 : 30
@@ -161,10 +161,8 @@ grade
 ###[문제17] 다음과 같이 값이 구성되는 리스트를 정의하여 L2 에 저장한다.
 (L2 <- list('scott', c(100,200,300)))
 ###[문제18] 다음 리스트에서 A를 "Alpha"로 대체한다.
-L3 <- list(c(3,5,7), c('A', 'B', 'C'))
-(temp <- unlist(L3[2]))
-temp[1] <- 'Alpha'
-(L3 <- list(c(3,5,7), temp))
+L3[[2]][1] <- 'Alpha'
+L3
 ###[문제19] 다음 리스트에서 첫 번째 원소(alpha)의 각 값에 10을 더하여 출력한다.
 (L4 <- list(alpha=0:4, beta=sqrt(1:5), gamma=log(1:5)))
 L4[[1]]+10
@@ -187,7 +185,7 @@ apply(iris[,1:4], 2, quantile)
 library(doBy)
 orderBy(~-Petal.Length, data=iris)
 ###Sepal.Width 를 내림차순 정렬하세요
-orderBy(~-Sepal.Length, data=iris)
+sort(iris$Sepal.Width, decreasing = T)
 ###[문제 23] iris 데이터의 종별 데이터 개수 출력한다
 table(iris$Species)
 ###[문제 24] 종별 Sepal.Length의 합을 출력한다.
@@ -200,4 +198,6 @@ sapply(iris[,1:4], mean)
 ###종별 Sepal.Length의 평균 출력
 tapply(iris$Sepal.Length, iris$Species, mean)
 ###[문제 26] 꽃받침의 길이(Sepal.Length)가 가장 긴 꽃의 종은 무엇인가요?
-iris[which.max(iris$Sepal.Length),]        
+iris[which.max(iris$Sepal.Length),]
+
+.

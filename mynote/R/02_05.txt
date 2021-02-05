@@ -1,0 +1,55 @@
+[5] dplyr 전처리
+ 
+dplyr 패키지
+>install.packages("dplyr") 다운로드
+library(dplyr) 로드
+
+filter():조건에 맞는 데이터 추출
+ex)exam1 <- exam %>% 
+  filter(class == 1 & english >= 80)
+
+select(): 필요한 변수 추출
+ex)exam %>% 
+  select(class, english, math)
+
+arrange(): 정렬하기
+ex)exam %>% 
+  arrange(math)
+exam %>% 
+  arrange(desc(math))
+
+mutate(): 파생변수 추가
+ex)exam %>% 
+  mutate(total=math+english+science, avg = as.integer(total/3))
+
+summarise(): 통계치 산출
+ex)exam %>% 
+  summarise(mean_math=mean(math),mean_eng=mean(english),mean_sci=mean(science))
+
+group_by(): 집단별로 나누기
+ex)exam %>% 
+  group_by(class) %>%
+  summarise(mean_math = mean(math)) %>% 
+
+*동시에 사용 가능
+>mpg %>% 
+  filter(class=="suv") %>% 
+  group_by(manufacturer) %>% 
+  mutate(mean_tot = (city+highway)/2 ) %>%
+  summarise(total = mean(mean_tot)) %>% 
+  arrange(desc(total)) %>% 
+  head(5)
+
+left_join(): 데이터 열 합치기
+bind_rows(): 데이터 행 합치기
+
+
+
+*요약 통계량 함수
+mean(): 평균
+sd(): 표준편차
+sum(): 합계
+median(): 중앙값
+min(): 최솟값
+max(): 최대값
+n(): 빈도
