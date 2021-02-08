@@ -1,0 +1,63 @@
+[6]dplyr이용 전처리
+
+4.데이터 합치기
+
+-열 합치기: cbind, left_join
+cbind: 열 합치기 기본, 행수 맞아야 가능
+merge(): 행수 맞지 않아도 가능
+left_join: 행수 맞지 않아도 가능(속성 연동)
+ex)
+cbind(test1, test2)
+merge(test1, test2)
+left_join(test1, test2,id="id")
+
+-행 합치기
+rbind: 행 합치기 기본, 열수 맞아야 가능
+merge(): 열수 맞지 않아도 가능
+bind_rows: 열수 맞지 않아도 가능(속성 연동)
+ex)
+rbind(group.a, group.b)
+bind_rows(group.a, group.b)
+merge(group.a, group.b, all = T)
+
+5.데이터 정제
+
+--결측치 정제
+:NA값 정제
+ex)
+table(is.na(df$gender))
+table(is.na(df$score))
+na.omit(df) #결측치 있는 행 제거, 데이터 손실
+
+-정제
+>
+apply(exam[3:5], 2, mean, na.rm=T)
+tapply(exam[,3], exam$class, mean, na.rm=T)
+
+-대체
+>
+exam <- within(exam, {
+  math <- ifelse(is.na(math), median['math'], math)
+  english <- ifelse(is.na(english), median['english'], english)
+  science <- ifelse(is.na(science), median['science'], science)
+}) #within 중앙값으로 대체
+colSums(is.na(exam))#변수별 결측치 확인
+
+--이상치 정제
+-논리적 이상치
+:올 수 없는 값
+ex)
+outlier$gender <- ifelse(outlier$gender==3, NA, outlier$gender)
+outlier$score <- ifelse(outlier$score > 100, NA, outlier$score)
+
+-집단적인 이상치
+:평균+표준편차*3(극단치 이외의 값)
+
+*극단치
+mean(mpg$hwy)+sd(mpg$hwy)*3
+mean(mpg$hwy)-sd(mpg$hwy)*3
+
+-정제
+ex)
+result <- boxplot(mpg$hwy)$stats #극단치 경계, 1사분위, 중앙값, 3사분위, 극단치 경계
+mpg$hwy <- ifelse(mpg$hwy>result[5]|mpg$hwy<result[1], NA, mpg$hwy)
