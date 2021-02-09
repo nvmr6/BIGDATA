@@ -137,10 +137,104 @@ mpg %>%
   arrange(desc(total)) %>% #정렬
   head(5)
 
+###4.데이터 합치기
+#열 합치기: cbind, left_join
+#열 합치기: rbind, bind_rows
+#merge()
 
+##4.1 열 합치기
+test1 <- data.frame(id=c(1,2,3,4,5), midterm=c(87,65,45,84,23))
+test2 <- data.frame(id=c(1,2,3,4,5), final=c(87,62,64,84,98), teacherid=c(6,6,8,8,9))
+teacher <- data.frame(teacherid=c(6,8,9), teachername=c('kim','lee','park'))
+cbind(test1, test2)
+merge(test1, test2)
+left_join(test1, test2,id="id")
+left_join(test2, teacher,id="teacherid")
 
+##4.2 행 합치기
+group.a <- data.frame(id=c(1,2,3,4,5), test=c(54,97,65,87,99))
+group.b <- data.frame(id=c(6,7,8,9,10), test=c(44,55,61,67,88))
+rbind(group.a, group.b)
+bind_rows(group.a, group.b)
+group.a <- data.frame(id=c(1,2,3,4,5), test1=c(54,97,65,87,99))
+group.b <- data.frame(id=c(6,7,8,9,10), test2=c(44,55,61,67,88))
+rbind(group.a, group.b)
+bind_rows(group.a, group.b)
+merge(group.a, group.b, all = T)
 
+###5. 데이터 정제 - 결측치, 이상치 정제
+##5.1 결측치 정제
+df <- data.frame(name=c('kim','lee','jung','han','park'), gender=c('m','f',NA,'m','f'), score=c(5,4,4,3,NA), income=c(2000,2000,3000,4000,4600))
+is.na(df)
+table(is.na(df$gender))
+table(is.na(df$score))
+na.omit(df) #결측치 있는 행 제거, 데이터 손실
 
+library(dplyr)
+df %>% 
+  filter(!is.na(score)) %>% 
+  summarise(mean_score=mean(score))
+mean(df$score, na.rm = T)
+tapply(df$score, df$gender, mean, na.rm=T)
 
+x <- c(11,22,33,44,55,66,77,88,99,10000)
+mean(x)
+median(x)
 
+exam <- read.csv("inData/exam.csv")
+exam[c(3,8,15),'math'] <- NA
+exam[c(1,2),'english'] <- NA
+table(is.na(exam))
+apply(exam[3:5], 2, mean, na.rm=T)
+tapply(exam[,3], exam$class, mean, na.rm=T)
 
+#결측치 대체
+
+(exam$math <- ifelse(is.na(exam$math), median(exam$math, na.rm = T), exam$math))
+(exam$math <- ifelse(is.na(exam$math), mean(exam$math, na.rm = T), exam$math))
+
+(exam$english <- ifelse(is.na(exam$english), median(exam$english, na.rm = T), exam$english))
+
+exam[c(3,8,15),'math'] <- NA
+exam[c(1,2),'english'] <- NA
+exam[c(9,7,12),'science'] <- NA
+median <- round(apply(exam[3:5], 2, mean, na.rm=T))
+median['math']
+median['english']
+median['science']
+
+exam <- within(exam, {
+  math <- ifelse(is.na(math), median['math'], math)
+  english <- ifelse(is.na(english), median['english'], english)
+  science <- ifelse(is.na(science), median['science'], science)
+}) #within 대체
+colSums(is.na(exam))#변수별 결측치 확인
+
+#결측치 대체 2
+median['math']
+median['english']
+median['science']
+exam <- exam %>% 
+  mutate(
+    math <- ifelse(is.na(math), median['math'], math),
+    english <- ifelse(is.na(english), median['english'], english),
+    science <- ifelse(is.na(science), median['science'], science)
+  )
+colSums(is.na(exam))#변수별 결측치 확인
+
+##5.2 이상치 정제
+#집단적인 이상치 / 논리적인 이상치
+#(1)논리적인 이상치
+outlier <- data.frame(gender=c(1,2,1,2,3), score=c(90,95,100,99,101))
+outlier$gender <- ifelse(outlier$gender==3, NA, outlier$gender)
+outlier$score <- ifelse(outlier$score > 100, NA, outlier$score)
+outlier
+
+#(2) 정상범위 기분으로 많이 벗어난 이상치: 상하위 0.3% 또는 평균+표준편차*3
+mpg <- as.data.frame(ggplot2::mpg)
+mpg$hwy
+mean(mpg$hwy)+sd(mpg$hwy)*3
+mean(mpg$hwy)-sd(mpg$hwy)*3
+result <- boxplot(mpg$hwy)$stats #극단치 경계, 1사분위, 중앙값, 3사분위, 극단치 경계
+mpg$hwy <- ifelse(mpg$hwy>result[5]|mpg$hwy<result[1], NA, mpg$hwy)
+head(mpg)

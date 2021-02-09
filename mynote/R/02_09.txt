@@ -1,0 +1,108 @@
+[6] 데이터 베이스 이용
+1. sqldf
+
+-sqldf(): 데이터 프레임의 데이터를 SQL문장을 이용하여 조회 가능
+>where, join, group by, order by, limit 사용 가능
+
+ex)
+sqldf("SELECT DISTINCT SPECIES FROM iris") #조회
+sqldf("select * from iris where Species = 'virginica'")#조건
+sqldf("select species, sum(`sepal.length`) from iris group by species")#그룹
+sqldf("select * from iris order by `sepal.length` limit 5")#정렬
+sqldf("select avg(`petal.length`) avgPL, avg(`petal.width`) avgPW, 
+	stdev(`petal.length`) sdPL, stdev(`petal.width`) sdPW from iris") #함수
+sqldf("select empno, ename, job, sal, e.deptno, dname from emp e, dept d where e.deptno = d.deptno")#조인 
+
+2. 오라클 db 이용
+순서
+#패키지 설치: RJDBC > JDBC를 이용하여 데이터 베이스에 연결하기 위한 패키지
+install.packages("RJDBC")
+library(RJDBC) #오라클 연동
+
+#드라이버 클래스 로드
+drv <- JDBC(driverClass = "oracle.jdbc.driver.OracleDriver", classPath = "ojdbc6.jar")
+
+#데이터베이스 연결
+con <- dbConnect(drv, "jdbc:oracle:thin:@127.0.0.1:1521:xe", "scott", "tiger")
+
+#SQL 전송 후 결과 받기
+emp <- dbGetQuery(con, "select * from emp")
+
+#테이블 전체 데이터
+dept <- dbReadTable(con, "dept")
+
+#SQL전송 - DB 수정
+dbSendUpdate(con, "INSERT INTO DEPT VALUES (90, 'www', 'aaa')")
+dbSendUpdate(con, "UPDATE DEPT SET LOC='INCHEON' WHERE DEPTNO=90")
+dbSendUpdate(con, "DELETE FROM DEPT WHERE DEPTNO = 60")
+
+#DB 연결 해제 / 드라이버 언로드
+dbDisconnect(con)
+dbUnloadDriver(drv)
+detach("package:RJDBC", unload = T)
+
+3. MySQL db 이용
+# MySQL Workbench에서 
+# ALTER USER '아이디'@'localhost' IDENTIFIED WITH mysql_native_password BY '비밀번호';
+# ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'mysql';
+
+install.packages("RMySQL")
+library(RMySQL)
+drv <- dbDriver("MySQL")
+con <- dbConnect(drv, host="127.0.0.1", dbname="kimdb", user="root", password="mysql")
+rs <- dbSendQuery(con, "select * from personal")
+personal <- fetch(rs, n=-1)
+personal
+dbUnloadDriver(drv)
+dbDisconnect(con)
+
+[7] 데이터 처리 성능 향상
+1. plyr 패키지
+:split-apply-combine 패턴을 구현하는 깨끗하고 일관된 도구 세트 (분할, 함수 적용, 재조합)
+>apply, sapply, lapply 대체 가능
+
+xyply()
+x / y : a:array, l:list, d:data.frame, m:multiple_input, r:repeat multiple time,  : nothing
+
+ex)
+adply(.data=iris[,1:4], .margins=2,function(col){sum(col)}) #apply, sapply ...와 유사
+>열별로 함수 적용
+
+ddply(.data=iris, .(Species), function(group){
+  data.frame(SL.mean=mean(group$Sepal.Length),
+             SWmean = mean(group$Sepal.Width))
+})#summaryBy와 유사
+
+2. 데이터 구조 변경 (melt, cast)
+
+-reshape2 패키지
+:데이터의 구조를 변경하기 위한 함수 제공, 더 집중적이고 더 빠르다
+
+-설치
+install.packages("reshape2")
+library(reshape2)
+
+-melt
+: 열 이름 값을 variable, value 열에 저장된 형태로 변환
+>melt(data, class, na.rm ...)
+ex)
+airquality.melt <- melt(airquality, id=c('Month', 'Day'), na.rm = T)
+>month와 day로 칼럼 고정하고 나머지 칼럼 변환
+
+-cast
+:melt된 데이터 프레임을 배열 또는 데이터 프레임으로 캐스팅
+>cast(data,formula, fun.aggregate, margin ...)
+ex)
+airquality.dc <- dcast(airquality.melt, Month+Day~variable)
+head(airquality.dc) > 결과:데이터 프레임
+
+airquality.ac <- acast(airquality.melt, Month+Day~variable)
+head(airquality.ac) > 결과: 배열
+
+
+
+
+
+
+
+

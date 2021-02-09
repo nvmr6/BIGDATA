@@ -220,12 +220,13 @@ student.b <- data.frame(name=c('lee', 'kim'), eng=c(80,70), mat = c(80,90))
 ###7. 데이터 정렬
 #sort(): 정렬된 데이터 반환 / order(): 정렬된 데이터 인덱스 반환
 data <- c(10,30,100,1,3)
-w
+sort(data)
+sort(iris$Sepal.Length, decreasing = T)
 names(data) <- c(1:5)
 sort(data)
 order(data)
 data[order(data)]
-oㅈ
+order(iris$Sepal.Length, decreasing = T) #인덱스
 iris[order(iris$Sepal.Length, decreasing = T),]
 
 order(-iris$Sepal.Length, iris$Sepal.Width)
