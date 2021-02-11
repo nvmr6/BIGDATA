@@ -1,0 +1,126 @@
+3. 데이터 테이블
+:데이터 프레임에서 상속, 빠른 개발을 위해 짧고 유연한 구문을 사용하여 파일 읽기와 
+쓰기, 집계, 업데이트, 동등 비교, 범위 및 내부 조인 등을 빠르고 메모리 효율적으로 제공
+>데이터 프레임의 기능 상속
+1) 간결함과 일관성
+2)유동적
+3)자동화
+
+-사용 순서
+install.packages("data.table") #fread
+library(data.table)
+flights <- fread("indata/flights14.csv")
+class(flights)#data table로 읽어 온다
+
+-사용법
+result <- flights[origin == "JFK" & month == 5]
+>부분 집합 조회
+result <- flights[1:2]
+>인덱스로 조회
+flights[order(origin, -dest)]
+>정렬하기
+flights[,year:dep_time]
+>열 조회
+flights[,.(delay_arr=arr_delay, delay_dep=dep_delay)]
+>열 이름 변경 조회
+flights[arr_delay+dep_delay<0, .(cnt=.N)] #.N: 갯수
+>표현식 조회
+flights[origin=='JFK'&month==6, .(mean(arr_delay),mean(dep_delay))]
+>행과 열 부분 집합 조회
+flights[,.(.N), by=.(origin)]
+>by로 그룹화
+flights[carrier=='AA', .(.N), .(origin, dest)]
+>by에 여러 열 지정
+
+[8]데이터 시각화
+데이터 > 데이터 가공 > 시각화 > 꾸미기
+시각화: graphics, ggplot, ggplot2
+종류: 산점도, 선 그래프, 히스토그램, 밀도 그래프, 막대 그래프, 박스 그래프, 모자이크 플롯, 파이 차트
+
+*par()
+: 그래프를 조정하거나 특성을 지정하기 위해 사용(전역 변수 수정, 그리기 전 파라미터 상태 저장)
+>oldPar <- par(bty="L")
+plot(cars)>변경 플롯
+par(oldPar)>원상복구
+plot(cars)>기존 플롯
+
+*base graphics system - 전통적인 함수, 그래프별 함수가 달라 정교한 그래프 이용시 노력 필요
+
+1)고수준 그래프
+:항상 새로운 그래프를 시작
+>plot(), barplot(), boxplot(), hist(), curve(), qqnorm()
+*plot(): 산점도 그래프
+>plot(cars, main="Speed and Stopping distance",type="p",
+	 xlab="speed(mph)", ylab="stopping distance(ft)", las=1)
+
+*barplot():막대그래프
+>barplot(VADeaths, main = "Deathrate in Virginia", font=2, border="red", 
+        legend=rownames(VADeaths), angle = c(15,30,45,60,75), density = 50, col = topo.colors(5), beside = T)
+
+*boxplot(): 사분위수 그래프
+>boxplot(count~spray, data=InsectSprays)
+
+*hist():히스토그램
+>hist(sqrt(islands))
+
+*pie(): 원형 그래프
+>pie(pie.sales, clockwise = T, col = heat.colors(6))
+
+*mosaicplot()
+>mosaicplot(~Sex+Age+Survived, data=Titanic)
+
+2)저수준 그래프
+:기존 그래프 위에 그래프 출력
+>points(), lines(), abline(), polygon(), text(), segments()
+
+*points(): 일련의 점을 그리는 함수
+>points(rnorm(100),rnorm(100))
+
+*lines(): 해당 점을 선분으로 결합
+>(fit <- lm(dist~speed,cars)) #y = 3.932*x - 17.579
+lines(cars$speed, 3.932*cars$speed-17.579, col="red")
+
+*ablines(): 회귀식선
+>(fit <- lm(dist~speed,cars)) #y = 3.932*x - 17.579
+abline(fit, col="blue", lty="dashed")
+
+*text(): 그래프 상에 글자 출력
+>text(3,3,'A', adj=c(0,0), col="red")
+
+3)ggplot2
+:base graphics system의 한계를 극복을 위해 개발한 패키지(ggplot2), 유연한 환경 제공
+
+*주요 함수
+–Qplot: 손쉽고 빠르게 시각화하기 위한 도구
+-ggplot: 데이터와 시각화 요소를 분리하여 시각화하는 도구
+
+*기하 객체
+-geom_point(): 산점도
+-geom_smooth(): 회귀선
+-geom_line():선 그래프
+-geom_histogram():히스토그램
+-geom_density():밀도 그래프
+-geom_bar():막대 그래프
+-geom_pointrange():값과 범위
+-geom_hline():가로선
+
+*미적 속성
+-x,y: 좌표값
+-color:색상
+-shape:점의 모양
+-size:점의 크기, 선의 굵기
+-alpha:투명도
+-fill:색상 분류 기준
+
+ex)
+ggplot(data=mtcars, aes(x=wt, y=mpg))+
+  geom_point(aes(pch=3))+
+  labs(title="fuel comsumption (miles per gallon)",
+       x="weight(1,000lbs)", y="fuel comsumption(miles per gallon)",
+       subtitle = "relation of weight and fuel consumption",
+       caption = "source: mpg datasets")
+
+ggplot(data=mtcars, aes(x=wt, y=mpg))+
+  geom_point(pch=25, color="blue", bg="red", size=2, stroke=2)+
+  geom_smooth()
+
