@@ -1,0 +1,232 @@
+########## FINAL EX ##########
+getwd()
+install.packages("foreign")
+library(foreign) # SPSS 파일 불러오기
+library(dplyr)   # 전처리
+library(doBy)    # 전처리
+library(ggplot2) # 시각화
+library(readxl)  # 엑셀 파일
+rm(list=ls(all.names = TRUE))
+raw_welfare <- read.spss(file='inData/Koweps/Koweps_hpc10_2015_beta1.sav', to.data.frame = T)
+#1. ‘한국복지패널데이터’(SPSS, koweps_hpc10_2015_beta5.sav)를 로드한 후 필요한 데이터 변수만을 select하여 변
+#수명을 변경하시오. 단 필요한 필드로 성별은 gender, 태어난 연도는 birth, 혼인상태는 marriage, 종교는
+#religion, 월평균임금은 income, 직업코드는 code_job, 지역코드는 code_region로 필드명을 변경한다.
+welfare <- raw_welfare[,c('h10_g3', 'h10_g4', 'h10_g10', 'h10_g11', 'p1002_8aq1', 'h10_eco9', 'h10_reg7')]
+names(welfare) <- c('gender', 'birth', 'marriage', 'religion', 'income', 'code_job', 'code_region')
+head(welfare)
+
+#2. 1번 문제의 결과인 data.frame변수를 이용하여 성별에 따른 월급 차이가 있는지를 분석하시오.
+table(welfare$income, useNA = "ifany")
+table(is.na(welfare$gender))
+welfare$gender <- ifelse(welfare$gender!=1&welfare$gender!=2, NA, welfare$gender)
+welfare$gender <- ifelse(welfare$gender==1, 'male', 'female')
+welfare$gender <- as.factor(welfare$gender)
+
+#(1) 도표
+welfare %>% 
+  group_by(gender) %>% 
+  summarise(ratio=n()/nrow(welfare)*100)
+
+#(2) 그래프
+welfare %>% 
+  group_by(gender) %>% 
+  summarise(ratio = n()/nrow(welfare)*100) %>% 
+  ggplot(aes(x=gender, y=ratio)) +
+  geom_col(aes(fill=gender)) +
+  labs(title = "남녀 성비") +
+  theme(legend.position = "none")
+
+inc <- boxplot(welfare$income)$stats
+welfare$income <- ifelse(welfare$income>inc[5]|welfare$income<inc[1], NA, welfare$income)
+summary(welfare$income) 
+
+welfare %>% 
+  filter(!is.na(income)) %>% 
+  group_by(gender) %>% 
+  summarise(income.mean = mean(income),
+            income.sd = sd(income)) %>% 
+  ggplot(aes(x=gender, y=income.mean)) +
+  geom_bar(aes(fill=gender),stat = 'identity') +
+  labs(title="성비에 따른 평균 수입")+
+  theme(legend.position = "none")
+
+#(3) 통계적인 분석
+temp <- welfare %>%  filter(!is.na(income))
+View(temp)
+var.test(income~gender, data=temp) # 등분산성 테스트
+t.test(income~gender, data=temp, var.equal=F)
+# p-value가 0.05미만으로 성별에 따른 월급차이가 없다는 가설을 기각한다
+
+#3. 1번 문제의 결과인 data.frame변수를 이용하여 나이와 월급의 관계를 분석하여 몇 살 때 월급을 가장 많이 받
+#는지 시각화하시오.
+result1 <- boxplot(welfare$birth)$stats
+welfare$birth <- ifelse(welfare$birth>result1[5]|welfare$birth<result1[1], NA, welfare$birth)
+result2 <- boxplot(welfare$income)$stats
+welfare$income <- ifelse(welfare$income>result2[5]|welfare$income<result2[1], NA, welfare$income)
+table(is.na(welfare$birth))
+table(is.na(welfare$income))
+
+age <- 2015-welfare$birth
+welfare <- cbind(welfare, age)
+age_income <- welfare %>% 
+  filter(!is.na(welfare$income)) %>% 
+  group_by(age) %>% 
+  summarise(income.mean = mean(income),
+            income.sd = mean(income)) 
+View(age_income)
+
+ggplot(age_income, aes(x=age, y=income.mean)) +
+  geom_col()+
+  labs(title="나이에 따른 평균 수입")
+
+result <- aov(income~age, data=welfare)
+summary(result)
+
+fit <- lm(income~age, data=welfare)
+anova(fit)
+
+#4. 1번 문제의 결과인 data.frame변수를 이용하여 연령대에 따른 월급의 차이가 있는지, 있으면 어떤 연령대가
+#월급이 가장 많은지 분석하시오. 단, 연령대는 30세 이하는 young, 30~60세는 middle, 61세 이상은 old로 분류한다.
+welfare$agegrade <- ifelse(welfare$age>61, "old", "middle")
+welfare$agegrade <- ifelse(welfare$age<30, "young", welfare$agegrade)
+qplot(welfare$agegrade) + xlim(c('young','middle','old'))
+#도표
+welfare %>% 
+  filter(!is.na(agegrade) & !is.na(income)) %>% 
+  group_by(agegrade) %>% 
+  summarise(income.mean = mean(income), income.sd=sd(income))
+#그래프
+ggplot(welfare, aes(x=agegrade, y=income, fill=agegrade)) +
+  geom_boxplot(notch = T) +
+  scale_fill_manual(values=topo.colors(3)) +
+  coord_cartesian(ylim=c(0,700))
+
+agegrade_income <- welfare %>% 
+  group_by(agegrade) %>% 
+  summarise(income.mean = mean(income, na.rm=T),
+            income.sd= sd(income, na.rm=T))
+summaryBy(income~agegrade, welfare, FUN=c(mean, sd), na.rm=T)
+
+ggplot(agegrade_income, aes(x=agegrade, y=income.mean)) +
+  geom_col(aes(fill=agegrade)) +
+  scale_x_discrete(limits=c('young','middle','old')) +
+  theme(legend.position = "none")+
+  labs(title="연령대에 따른 평균 수입")
+
+ggplot(welfare, aes(x=agegrade, y=income)) +
+  geom_point(position='jitter', col='orange', alpha=0.2)+
+  geom_boxplot(aes(fill=agegrade), notch = T) +
+  scale_x_discrete(limits=c('young','middle','old')) +
+  scale_fill_discrete(limits=c('young','middle','old')) +
+  coord_cartesian(ylim=c(0,400))+
+  labs(title="연령대에 따른 평균 수입")
+
+
+#통계 분석
+temp <- welfare %>%  filter(!is.na(income))
+result <- aov(income~agegrade, data=temp)
+summary(result)
+
+(fit <- lm(income~agegrade, data=welfare))
+anova(fit)#다르다
+
+#5. 1번 문제의 결과인 data.frame변수를 이용하여 성별에 따른 월급의 차이는 연령대 별로 다른지 분석하시오.
+table(is.na(welfare$gender))
+table(is.na(welfare$agegrade))
+table(is.na(welfare$income))
+welfare %>% 
+  filter(!is.na(income)) %>% 
+  group_by(agegrade, gender) %>% 
+  summarise(mean=mean(income), sd=sd(income), n()) %>% 
+  ggplot(aes(x=gender, y=mean))+
+  geom_col(aes(fill=gender))+
+  facet_wrap(agegrade~.)+
+  labs(title="연령대별 성별에 따른 평균 수입")+
+  theme(legend.position = "none")
+
+#6. 1번 문제의 결과인 data.frame변수를 이용하여 나이에 따른 월급 변화를 성별을 분리하여 시각화 하시오.
+welfare %>% 
+  filter(!is.na(income)) %>% 
+  group_by(age, gender) %>% 
+  summarise(mean=mean(income), sd=sd(income), med = median(income), min=min(income), max=max(income), n()) %>% 
+  ggplot(aes(x=age, y=mean))+
+  geom_line(aes(col=gender), size=1)+
+  labs(title="성별 나이에 따른 평균 수입")+
+  theme(legend.position = "none")
+ggsave('outData/FinalEx6.png')
+
+#7. 1번 문제의 결과인 data.frame변수를 이용하여 직업별 월급의 차이가 나는지 분석하고, 만약 월급의 차이가
+#나면 어떤 직업이 월급이 가장 많은지 상위 10개 직업군만 시각화하시오.
+data <- read_excel("inData/Koweps/Koweps_Codebook_job.xlsx")
+data
+welfare <- left_join(welfare, data, id="code_job")
+
+welfare %>% 
+  filter(!is.na(income)&!is.na(job)) %>% 
+  group_by(job) %>%
+  summarise(mean=mean(income), sd=sd(income), n()) %>% 
+  arrange(desc(mean)) %>% 
+  head(10) %>% 
+  ggplot(aes(x=mean,y=reorder(job, mean)))+
+  geom_col()+
+  labs(title="직업별 월급 상위 10개")
+
+#8. 1번 문제의 결과인 data.frame변수를 이용하여 성별로 어떤 직업이 가장 많을지 분석하시오.
+welfare %>% 
+  filter(gender=='male'&!is.na(job)) %>% 
+  group_by(job) %>% 
+  summarise(n=n()) %>% 
+  arrange(-n) %>% 
+  head(10)
+welfare %>% 
+  filter(gender=='female'&!is.na(job)) %>% 
+  group_by(job) %>% 
+  summarise(n=n()) %>% 
+  arrange(-n) %>% 
+  head(10)
+
+#9. 1번 문제의 결과인 data.frame변수를 이용하여 종교 유무에 따른 이혼률을 분석하시오.
+welfare$religion <- ifelse(welfare$religion!=1&welfare$religion!=2, NA, welfare$religion)
+table(is.na(welfare$religion))
+welfare$religion <- ifelse(welfare$religion==1, '유', '무')
+welfare$religion <- as.factor(welfare$religion)
+welfare %>% 
+  group_by(religion) %>% 
+  summarise(ratio=n()/nrow(welfare)*100) %>% 
+  ggplot(aes(x=religion, y=ratio))+
+  geom_col(aes(fill=religion))
+
+welfare$marriage <- ifelse(welfare$marriage!=1&welfare$marriage!=3, NA, welfare$marriage)
+welfare <- welfare %>% 
+  mutate(marriage_group = ifelse(is.na(marriage), NA, marriage))
+welfare$marriage_group[welfare$marriage==1 & !is.na(welfare$marriage_group)] <- '기혼'
+welfare$marriage_group[welfare$marriage==3 & !is.na(welfare$marriage_group)] <- '이혼'
+welfare %>% 
+  group_by(religion) %>% 
+  summarise(ratio = nrow(welfare[!is.na(marriage_group) & marriage_group=='이혼',])/nrow(welfare[!is.na(marriage_group),])*100) %>% 
+  ggplot(aes(x=religion, y=ratio))+
+  geom_col(aes(fill=religion))+
+  labs(title="종교 유무에 따른 이혼률")+
+  theme(legend.position = "none")
+
+#10. 1번 문제의 결과인 data.frame변수를 이용하여 지역별 연령대 비율을 분석하시오. 노년층이 많은 지역은 어
+#디인지 출력하시오.
+table(is.na(welfare$religion))
+table(is.na(welfare$agegrade))
+welfare <- welfare %>% 
+  mutate(region = ifelse(code_region==1, '서울', 
+                         ifelse(code_region==2, '수도권(인천/경기)', 
+                                ifelse(code_region==3, '부산/경남/울산',
+                                       ifelse(code_region==4, '대구/경북',
+                                              ifelse(code_region==5, '대전/충남',
+                                                     ifelse(code_region==6, '강원/충북',
+                                                            ifelse(code_region==7, '광주/전남/전북/제주', NA))))))))
+welfare %>% 
+  group_by(agegrade, region) %>% 
+  summarise(n=n()) %>%
+  ggplot(aes(x=agegrade, y=n))+
+  geom_col(aes(fill=agegrade))+
+  facet_wrap(region~.)+
+  labs(title="지역별 연령대 비율")+
+  theme(legend.position = "none")
+
