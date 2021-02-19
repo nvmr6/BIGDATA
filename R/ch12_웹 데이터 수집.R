@@ -117,6 +117,56 @@ wordcloud(words = df_word$word,
           colors = pal
 )
 
+#2. 동적 웹 크롤링 (셀레니움 패키지): 스크롤 다운, 로그인, 버튼 ...
+
+#특정 폴더 생성 > 3개의 파일 다운로드 > 셀레니움 서버 가동
+#라이브러리 로드
+install.packages("RSelenium")
+library(httr)
+library(rvest)
+library(RSelenium)
+#셀레니움 동적 웹 크롤링 준비
+
+#ex1 데이터 입력후 엔터 목록 
+remDr <- remoteDriver(port=4445L, browser='chrome')
+remDr$open()
+remDr$navigate('http://www.youtube.com')
+welElem <- remDr$findElement(using='css', '#search') #검색창 엑세스
+welElem$sendKeysToElement(list('과학 다큐 비욘드', key='enter')) #데이터 입력
+html <- remDr$getPageSource()[[1]] #현재의 페이지 소스
+html <- read_html(html)
+
+youtube_title <- html %>%
+  html_nodes('#video-title') %>% 
+  html_text()
+youtube_title <- gsub('\n', '', youtube_title)
+youtube_title <- trimws(youtube_title)
+
+youtube_title_url <- html %>% 
+  html_nodes('#video-title') %>% 
+  html_attr('href')
+youtube_title_url <- ifelse(is.na(youtube_title_url), '', paste0('http://www.youtube.com', youtube_title_url))
+write.table(youtube_title, file='outData/과학다큐결과.txt', sep=', ', row.names=F, quote=F)
+
+#ex2 스크롤 다운
+remD <- remoteDriver(port=4445L, browser='chrome')
+remD$open()
+remD$navigate('https://youtu.be/tZooW6PritE')
+btn <- remD$findElement(using = 'css selector',
+                        value = '.html5-main-video')
+btn$clickElement() #메인 영상 정지
+remD$executeScript("window.scrollTo(0,500)")
+remD$executeScript("window.scrollTo(500,3000)")
+
+html <- remD$getPageSource()[[1]] #현재의 페이지 소스
+html <- read_html(html)
+comment <- html %>% html_nodes('#content-text') %>% html_text()
+write.table(comment, file='outData/유튜브댓글.txt', sep=', ', row.names=F, quote=F)
+
+
+
+
+
 
 
 
