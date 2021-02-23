@@ -1,0 +1,195 @@
+3. 데이터 구조
+
+[1]리스트
+-리스트를 이용하면 여러 개 값을 저장
+-리스트를 만들려면 대괄호 와 를 이용
+-인덱스를 이용해 읽기와 쓰기를 지원
+-부분 데이터셋을 뽑아내는 슬라이싱을 지원
+-파이썬의 인덱스는 0 부터 시작
+ex)
+fruits = ['banana', 'apple', 'orange', 'grape']
+type(fruits)
+*출력
+# range(from, to, by) ; from부터 to바로 앞까지 by씩 증가되면서 만들어진 list
+      # from 생략시 0부터 / by 생략시 1씩
+for idx in range(len(fruits)) :
+    print('{}번째 : {}'.format(idx+1, fruits[idx]))
+
+*다차원 리스트
+ex)
+numbers_2d =[[1,2,3,4,5],
+             [10,20,30,40,50],
+             [1,3,5,7,9],
+             [2,4,6,8,10]]
+print(numbers_2d)
+
+*요소 수: len()
+*기능: min(),max(),min(),max()
+
+*요소 추가
+-+: 두 리스트 연결
+-*: 리스트를 곱한 후 만큼 반복
+-append(): 요소를 맨 뒤에 추가
+-extend(): 요소별로 맨 뒤에 추가
+- insert() 지정된 index 위치에 삽입
+
+*인덱싱
+-count(): 데이터의 갯수 반환
+-index(): 해당 요소의 위치 반환
+
+*슬라이싱
+:[from:to:by]: from부터 to 바로 앞까지 by번 증가하는 인덱스 아이템
+
+*람다식
+:[data for data in numbers]
+
+*요소 수정
+ex)
+numbers[2] = 222
+numbers[0:5] = [9,9,9] > 맵핑이 아닌 대체
+numbers[::2] = [1,1,1,1,1] > by 포함시 수 일치
+
+*요소 삭제
+pop(): 마지막 요소 반환되고 삭제,pop(n): n번째 삭제
+remove(): remove(data) 해당 데이터 삭제
+del
+
+*요소 정렬
+numbers.sort()
+-기본 정렬: 오름 차순, 리스트 변경
+-새로운 변수에 저장해도 기존 데이터 변경
+
+*리스트 복제
+ex)
+#copy()함수 이용
+numbers = [7,565,78,54,33,9,41,547]
+new = numbers.copy()
+new.sort()
+print(numbers)
+print(new)
+
+[2]튜플
+-읽기 전용, 리스트와 유사, 수정이 필요없는 데이터
+-수정이 불가하므로 튜플에 데이터 추가, 수정, 삭제 불가
+ex)
+city = ('seoul', 'chicago', 'tokyo', 'paris', 'berlin')
+type(city)
+
+[3] 딕셔너리
+키와 값으로 이루어짐
+키는 중복을 허용하지 않음, 키에 리스트는 불가 튜플은 가능
+값은 중복 가능, 모든 자료형 가능
+ex)
+dic = {'key1':'value', 'key2':'value'}
+print(type(dic))
+print(len(dic))
+
+[4] 셋
+:순서가 정해지지 않고 , 중복을 허용하지 않는 집합
+
+[5] enumerate
+-반복자 (iterator) 또는 순서 (sequence) 객체를 인수로 받음
+-enumerate( iter ) 이라고 사용했을 경우 이 함수는 iter 객체를 (0,
+iter [0]), (1, iter [1]), (2, iter [2]), ... 이런 형식으로 반환
+
+4. 제어문
+[1] 조건문
+*if
+-if 다음에는 '조건식'이 존재하는데 이 '조건식'이 참(True)이면 들여쓰기 한 문장 실행
+-if 문장 끝에는 콜론(:) 을 입력, 콜론은 블록의 시작을 의미
+-if 문의 '조건식'이 참(True)일 때 실행되는 문장은 들여쓰기를 해야 합니다.
+-else 구문은 if 문의 조건식이 False일 경우 실행하는 블록을 정의
+-여러 개 조건식을 사용하려면 elif 구문을 이용
+ex)
+score = int(input("Enter your score: "))
+if 90 <= score <= 100:
+    grade = 'A'
+elif 80 <= score < 90:
+    grade = 'B'
+elif 70 <= score < 80:
+    grade = 'C'
+elif 60 <= score < 70:
+    grade = 'D'
+elif score < 60:
+    grade = 'F'
+else:
+    grade = None
+print(grade)
+
+*for in
+:나열 가능한 자료에서 자료를 모두 소비할 때까지 처리
+-for 문장의 items 객체 위치에 range(start, stop, step)함수를 이용하여 반복문을 
+실행시킬 수 있음. range() 함수를 이용하면 인덱스 위주의 반복을 실행시킬 수 있음
+>for i in range(1,10,2):
+    print(i, end='\t')
+print('DONE')
+
+*while
+:조건문이 참일 동안 계속 실행
+ex)
+sum = 0
+i = 1
+while i <= 20:
+    if i%2 == 0:
+        sum += i
+    i += 1
+else:
+    print(sum)
+
+*break, continue
+-break를 만나면 break를 포함하는 반복문을 완전히 탈출
+-continue는 반복문 내에서 continue 이후의 문장을 건너뜀
+ex)
+num = 0
+while num<=10:
+    num+=1
+    if num==5:
+        break#현재 반복문 빠져나옴
+    print(num, end=" ")
+
+num = 0
+while num<=10:
+    num+=1
+    if num==5:
+        continue#반복문 조건으로 감
+    print(num, end=" ")
+
+*중첩 루프
+:중첩 루프(Nested Loop)는 2차원 이상 구조 데이터를 다룰 때 사용
+ex)
+1)for i in range(len(list_2d)):
+    for j in range(len(list_2d[i])):
+        print(list_2d[i][j], end='\t')
+    print()
+2)for i, row in enumerate(list_2d):
+    for j,data in enumerate(row):
+        print(data, end='\t')
+    print()
+
+*중첩루프 탈출
+1) 플래그 변수 사용
+:프로그래머가 바깥 쪽을 둘러싸는 루프의 다음 반복으로 이동하거나 한 번에 여러 루프를 종료하려는
+경우에는 레이블이 지정된 break를 모방하는 일반적인 방법으로 플래그 값을 지정
+ex)
+breakflag = False
+for a in range(3):
+    for b in range(1,3):
+        if a==b:
+            breakflag = True
+            break;
+        print(a,b)
+    if breakflag:
+        break;
+
+2)예외 처리 이용
+ex)
+class BreakOutLoop(Exception):
+    pass #아무것도 실행하지 않음
+for a in range(3):
+    try:
+        for b in range(1,3):
+            if a==b:
+                raise BreakOutLoop
+            print(a,b)
+    except BreakOutLoop:
+        break;
