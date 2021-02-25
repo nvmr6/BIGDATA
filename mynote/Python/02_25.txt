@@ -1,0 +1,67 @@
+[6] 모듈과 패키지
+
+모듈:파이썬 정의와 문장을 담고 있는 파일
+>함수 또는 변수의 정의를 파일에 넣고 스크립트 또는 
+인터프리터의 대화형 인스턴스에서 사용하는 방법을 가지고 있음
+
+-Python Library Reference)에서 설명하는 표준 모듈 라이브러리를 제공
+-일부 모듈은 인터프리터에 내장되어 효율성이나 시스템 호출과 같은 운영 체제 
+ 기본 요소 또는 내장되어 있는 작업에 대한 접근을 제공
+-일부 모듈 세트는 기본 플랫폼에 종속
+
+1.import하는 방법
+import module_name
+from package_name import module_name
+from module_name import function_name
+import package_name as package_nickname
+import module_name as module_nickname
+
+*dir(): 모듈이 정의한 이름을 정렬된 문자열 목록으로 반환
+
+2. 모듈 만들기
+1) py파일 생성
+2) module import
+3) sys.path 초기화
+sys.path
+-sys.path.insert(index, path) / sys.path.append(path): 추가
+-sys.path.remove(path): 제거
+4) module 실행
+
+3. 패키지
+:“점으로 구분 된 모듈 이름”을 사용하여 파이썬 모듈 네임 스페이스를 구조화하는 방법
+-모듈 이름 A.B는 A라는 패키지에 B라는 서브 모듈을 지정
+-모듈을 사용하면 다른 모듈의 작성자가 서로의 전역 변수 이름을 신경 쓰지 않아도 
+  되므로 점이 있는 모듈 이름을 사용하면 작성자(author)를 절약 할 수 있음
+
+1) 패키지 경로 추가
+sys.path.append(path)
+2)import package
+>import 패키지명
+-패키지 사용자는 패키지에서 개별 모듈을 가져올 수 있음
+-상위 패키지를 import 한다고 해서 하위 패키지까지 로드되지 않음
+-한번 로드된 패키지는 다시 로드되지 않음
+3)import
+from 패키지명 import 모듈명
+-패키지의 하위 패키지 또는 하위 모듈을 가져오는데 사용
+from 패키지명.모듈명 import 함수명
+-원하는 함수 또는 변수를 직접 가져 오는 것
+from . import: 현재 패키지 참조
+from .. import: 상위 패키지 참조
+
+*__path__속성:패키지의 속성
+:파일의 코드가 실행되기 전에 패키지의 __init__.py를 담고 있는 
+  디렉토리의 이름을 포함하는 리스트로 초기화
+>패키지에서 찾은 모듈 세트를 확장하는 데 사용
+
+4.패키지 설치 및 삭제
+
+*패키지 이름으로 설치
+-pip install 패키지명
+-conda install 패키지명
+
+*whl 파일을 이용한 설치
+-python –m pip install whl파일명
+
+*패키지 관리
+-conda list 패키지명
+-conda remove 패키지명
