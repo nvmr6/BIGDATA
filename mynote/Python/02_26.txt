@@ -1,0 +1,209 @@
+[7] 객체지향 프로그래밍
+
+1. 객체와 클래스
+클래스 : 객체를 만들기 위한 틀
+객체 : 클래스의 인스턴스
+객체의 명사적 특성 : 데이터, 변수, 필드, 속성
+객체의 동사적 특성 : 행위 , 함수 , 메서드, 기능
+
+클래스 정의 >class class_name:
+		class_body
+객체 생성 > p1 = class_name()
+ex)
+class person:
+    name = 'hong'
+    gender = 'male'
+p1 = person()
+
+2. 변수와 메소드
+:객체를 이용하여 데이터를 저장(변수), 객체 고유의 기능을 갖기 위해(메소드)
+class person:
+    name = 'hong'
+    gender = 'male'#변수 추가
+    def print_info():
+        print('method of person') #메소드 추가
+p1 = person()
+print(p1.name, p1.gender)
+print(p2.name, p2.gender) #수정 가능
+
+*인스턴스 메소드
+:객체를 이용해 참조할 수 있는 메서드
+-인스턴스 메서드의 첫 번째 인자는 self 여야 함
+-self 인자는 객체의 멤버 변수 또는 메서드에 접근하기 위해 사용
+ex)
+def print_info(self): # instance method, self는 this와 같음
+        print('{} is {} years old {}.'.format(self.name, self.age, self.gender))
+*self:인스턴스 메서드의 인자로 정의해서 자신 객체의 멤버를 참조할 수 있도록 하는 것
+
+네임 스페이스
+-파이썬은 클래스와 인스턴스의 이름공간이 분리되어 있음
+-클래스와 인스턴스의 변수명이 다를 수 있다
+-동적으로 인스턴스에 멤버 추가 가능
+
+>인스턴스 영역 > 클래스 영역 > 전역 영역
+
+*class method
+: @classemthod를 통해서 선언한 메소드, 인자에 cls, 클래스를 통해서 호출
+ex)
+ @classmethod
+    def do_(cls): # class method, 인자 필요
+        cls.name = 'kim'
+        cls.gender = 'female'
+        cls.age = 33
+        print("{} is {} years old {} - class method".format(cls.name, cls.age, cls.gender))
+*static method
+: @staticmethod를 통해 선언한 메소드
+ex)
+@staticmethod
+    def that_(): # static method, 인자 없음
+        print("{} is {} years old {} - static method".format(person.name, person.age, person.gender))
+> 객체를 만들지 않고 클래스 이름으로 참조 가능
+
+3. 생성자와 소멸자
+생성자: 객체가 생성될 때 자동으로 실행, 생성 시 필요한 코드를 포함 > __init__()
+소멸자: 객체가 소멸될 때 자동으로 실행, 소멸시 필요한 코드를 포함, 객체는 인스턴스 객체의 레퍼런스 카운트가 0이 될 때 소멸 > __del__()
+
+ex)
+class person:
+    def __init__(self):
+        print("person obj")
+        self.name = 'hong' #일반 변수
+        self.gender = 'male'
+    def __del__(self):
+        print("person obj")
+
+*생성자를 이용한 인스턴스 변수 초기화
+ex)
+class person:
+    def __init__(self, name, gender):
+        self.name = name
+        self.gender = gender 
+p1 = person('kim', 'male') #생성시 초기화
+
+*중복 정의를 허용하지 않음
+class person:
+    def __init__(self, name='hong', gender='male'): #생성자 함수 중복 불가
+        print("person obj init")
+        self.name = name
+        self.gender = gender
+p1 = person('kim', 'female')
+p2 = person('han')
+p3 = person() #초기화 하지 않을 시 기본값으로 초기화
+
+4. 상속과 재정의
+상속: 객체 재사용의 한 방법, 부모 클래스의 모든 속성을 물려줄 수 있음
+ex)
+class student(person):
+    pass
+s1 = student('lee', 'female')
+>Student 클래스의 생성자는 Person 클래스의 생성자를 이용하여 인스턴스 변수를 초기화 가능
+
+class student(person):
+    "major 변수를 갖는 타입"
+    def __init__(self, name, gender, major):
+        person.__init__(self,name,gender)
+        #부모 클래스의 생성자를 호출하여 자식 클래스의 생성자를 쉽게
+        self.major = major #변수 추가
+    def __del__(self):
+        pass
+    def print_info(self):
+        print(self.name, self.gender, self.major) #재정의
+    def __str__(self):
+        return super().__str__()+" {}".format(self.major)
+
+*static 변수: 여러 객체들 사이에 데이터를 공유하고 싶을 때 사용
+>클래스 변수 이름 앞에 __ 추가 >내부적으로 클래스명._클래스명 변수 이름으로 참조
+
+ex)
+ __count = 0 #static 변수
+def __init__(self, name, gender, major):
+        student._student__count += 1 #생성시 count 증가
+        person.__init__(self,name,gender)
+        self.major = major
+ @classmethod
+    def get_count(cls):
+        return student._student__count #변수 출력
+
+[8]예외 처리
+
+1. 예외
+예외: 실행 중 발견된 오류
+예외 처리(Exception Handling) : 오류 발생에 대한 대처 방법 중 하나
+>시스템 스스로 오류를 복구 하는 것이 아니고 오류발생 가능성이 있는 부분에 대한 처리를 미리 프로그래밍 하는 것
+
+2. 예외 처리
+try: 예외를 처리할 때 예외가 발생할 가능성이 있는 문장을 작성
+>try 절(또는 블록)에서 예외가 발생하면 except 절을 찾음
+except: 예외가 발생했을 경우 실행되어야 할 코드를 작성
+ex)
+while True:
+    try:
+        num =int(input("정수 입력: "))
+        print("입력한 정수는 {}".format(num))
+        break;
+    except ValueError as e:
+        print("not valid") #예외 발생시
+>except 절은 예외 이름을 생략 할 수 있음 (최상위 예외: Exception)
+>예외별로 처리 가능, tuple로 지정 가능
+ex)
+try:
+        num =int(input("정수 입력: "))
+        print("입력한 정수는 {}".format(num))
+        print(100/num)
+        break;
+except ValueError:
+        print("not valid")
+except ZeroDivisionError:
+        print("cannot divide by 0")
+*else: 예외가 발생하지 않은 경우 실행
+*예외 인수 e: 예외 발생시 관련 값
+3. 강제 예외 발생
+raise: 강제로 예외 발생시 사용
+>지정된 예외가 발생하도록 할 수 있음
+ex)
+def insert(data):
+    if len(data)==0:
+        raise Exception("it's 0")
+    print(data, insert)
+insert([])
+
+4,5. 추상 클래스 정의하기
+:추상 클래스는 존재하지 않으나 raise로 흉내냄
+ex)
+class abstractError(Exception):
+    "추상 클래스 이용하여 객체 생성 시 나는 오류"
+    def __init__(self):
+        Exception.__init__(self, "shape is abstract class")
+
+class shape:
+    def __init__(self):
+        raise abstractError() #예외 발생
+    def cal_area(self):
+        raise abstractError()
+
+class circle(shape):
+    def __init__(self, r):
+        self.r = r
+    def cal_area(self):
+        return r**2*3.14
+
+6. 파일 정리 작업
+:자원을 반납하는 코드를 작성하여 프로그램을 더 안정적으로 코딩
+파일 정리작업 방법
+1)예외처리 시 사용하는 finally 블록을 이용
+>
+filename = input('file name: ')
+try:
+    f = open('data/'+filename+'.txt','r')
+    lines = f.readlines()
+    print(lines)
+except:
+    pass
+finally:
+    f.close() #항상 실행
+
+2)사전 정의된 정리작업을 위한 with를 이용
+>
+with open('data/hello.txt', 'r') as f: #자동으로 close
+    lines = f.readlines()
+    print(lines)
