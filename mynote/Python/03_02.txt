@@ -1,0 +1,98 @@
+[9] 입출력 프로그래밍
+
+1.읽기/쓰기
+open():  파일 객체를 반환
+ex) f = open('data/sample.txt','w')
+
+file_pointer: 열린 파일 객체
+readline()/readlines(): 읽음, write(): 쓰기
+
+mode : 파일 열기 모드
+r : 읽기 모드 - 파일을 읽기만 할 때 사용
+w : 쓰기 모드 - 파일의 내용을 쓸 때 사용
+a : 추가 모드 - 파일의 마지막에 추가할 때 사용
+b : 바이너리 모드 – 피클 등을 사용하여 저장하거나 불러올 때는 바이너리 모드로 지정해야 함
+
+encoding : 파일의 인코딩을 지정
+UTF-8 인코딩으로 저장되어 있는 파일이라면 encoding='UTF8'을 사용
+
+ex)
+with open('data/sample.txt','r') as txtfile:
+    lines = txtfile.readlines() #한꺼번에 읽기
+    print(lines)
+
+2. 피클링
+:파이썬 객체 계층 구조가 바이트 스트림으로 변환되는 것
+>pickle.dump(obj, file, protocol, fix_imports)
+obj : 열려있는 파일에 저장할 객체
+file : 피클링하기 위한 파일 객체(파일을 열 때 피클링하기 위한 모드는 ‘wb’)
+protocol : 프로토콜을 사용하기 위한 정수(0 ~ HIGHEST_PROTOCOL) 값
+fix_imports : 이 인수가 True이고 프로토콜은 3보다 작으면 파이썬 2에서 피클 데이터 스트림을 읽을 수 있음
+
+ex) with open('data/ch09_member.data','wb') as f:
+    	import pickle
+  	pickle.dump(user_list,f)
+
+3.CSV
+>프로그래머는 엑셀에서 선호하는 형식으로 데이터를 쓰거나 엑셀에서 생성된 CSV 파일의 데이터를 읽을 수 있음
+
+*reader
+:지정된 파일에서 분리된 문자열로 데이터를 읽기 위한 객체를 반환
+ex) with open('data/ch09_member1.csv', 'r', encoding='UTF8') as f:
+    reader = csv.reader(f, quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
+    for row in reader:
+        print(row)
+-quotechar, quoting 속성 : 자동 형변환을 위한 딕셔너리 인수, 숫자가 아닌 데이터 따옴표로 묶여있지 않을 경우 에러
+
+*writer
+: 파일에 구분자로 연결된 문자열 데이터를 저장하는 객체를 반환
+ex)try:
+    with open('data/ch09_member2.csv','w', newline='', encoding='UTF8') as f:
+        writer = csv.writer(f)
+        for user in user_list:
+            writer.writerow(user)
+except Exception as e:
+    print(e)
+
+3. dictreader
+:reader와 비슷하게 동작하지만 각 행의 정보를 OrderedDict 객체로 반환
+>CSV 파일에 각 열들의 이름(메타정보)을 지정해서 데이터를 딕셔너리 형식으로 불러옴
+ex)
+with open('data/ch09_member1.csv', 'r') as f:
+    dict_reader = csv.DictReader(f, fieldnames = ['name', 'age', 'email', 'address'])
+    for row in dict_reader:
+        print(row['name'],row['age'],row['email'],row['address'])
+-fieldname 속성: 헤더 정보를 포함하고 있지 않을 경우 fieldnames 속성을 이용해서 각 필드들의 이름을 지정
+
+4.dictwriter
+:딕셔너리 데이터 행 별로 CSV 파일에 저장
+
+-writerow(): 한 개의 행 저장
+ex)
+with open('data/member4.csv', 'w', encoding='UTF8', newline='') as f:
+    dict_writer = csv.DictWriter(f, fieldnames = fieldnames)
+    dict_writer.writeheader() #header
+    for row in user_list:
+        dict_writer.writerow(row)
+
+5.json
+:JavaScript Object Notation, 사람과 기계 모두 분석과 생성이 쉬움
+
+*dump() 함수: 파이썬 객체를 JSON 형식으로 변환
+ex)
+with open('data/member2.json', 'w', encoding='UTF8') as jsonfile:
+    json.dump(member_list, jsonfile, ensure_ascii=False, indent='\t', default=Member.as_dict)
+
+*load() 함수: JSON 형식 데이터를 파이썬 객체로 변환
+ex)
+with open('data/member2.json','r',encoding='utf8') as jsonfile:
+    member_list = json.load(jsonfile, object_hook=as_member)
+
+6. HDF5
+:HDF 그룹에 의해 관리되고 있는 이기종 데이터를 저장, 관리, 처리하기 위한 고성능 데이터 소프트웨어 라이브러리 및 파일 형식
+> 빠른 입/출력 저장 및 처리를 위해 만들어졌음
+
+*읽고 쓰기
+:1)판다스(Pandas) 패키지의 read_hdf() 함수와 to_hdf() 함수를 사용해서 데이터프레임으로 읽거나 쓰는 방법
+ 2)h5py 모듈의 File 클래스를 이용해 파일 객체를 생성하고 읽는 방법
+
