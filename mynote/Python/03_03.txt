@@ -1,0 +1,81 @@
+[10] DB 연동
+
+1. SQLite
+:SQL 쿼리 언어의 비표준 변형을 사용하여 데이터베이스에 액세스 할
+수 있는 디스크 기반 데이터베이스 를 제공하는 C 라이브러리
+
+SQLite 모듈
+:파이썬에서 데이터베이스에 연결하기 위한 모듈
+PEP 249 에 설명된 SQLite 데이터베이스를 위한 DB API 2.0 사양을 준수하는
+SQL 인터페이스를 제공함
+>import sqlite3
+sqlite3.sqlite_version
+
+-connection 형성: DB 연결 객체 생성
+>conn = sqlite3.connect('data/ch10_example.db')
+-커서 객체 형성: SQL문을 실행시키고 결과 데이터를 조회하는 데 사용
+>cursor = conn.cursor()
+-실행
+>cursor.execute()
+
+*CRUD
+Create , Read, Update, Delete
+>데이터베이스에 데이터를 입력 , 조회 , 수정 , 삭제하는 것
+
+과정
+1.sqlite3.connect () 함수를 이용해서 데이터베이스 연결 (Connection) 객체를
+생성 .
+2.Cursor 객체 생성
+3.Cursor 객체의 execute() 메서드를 이용하여 SQL 구문 실행
+4.Connection 객체의 commit() 메서드를 이용하여 변경된 내용을 데이터베이스
+에 반영 커밋 ; 하거나 변경된 내용을 취소 롤백 ; Rollback
+5.데이터베이스 연결 닫기
+
+
+*SELECT
+커서 객체의 execute () 메서드를 이용해 SELECT 구문을 실행
+커서 객체의 fetchone (), fetchall () 등의 메서드와 반복문을 이용해 데이터 처리
+커서로부터 조회
+
+ex)
+conn = sqlite3.connect('data/ch10_example.db')
+cursor = conn.cursor()
+cursor.execute("SELECT * FROM MEMBER WHERE EMAIL IN ('WWW@W.COM', 'EEE@W.COM')")
+cursor.fetchall()
+cursor.close()
+conn.close()
+
+*파라미터 이용
+-qmark 스타일
+>SQL 구문의 매개변수를 포함해야 할 값에 물음표 로 표시 한 후 튜플을 통해 물음표에 전
+달할 값을 지정
+ex)cursor.execute("SELECT * FROM MEMBER WHERE NAME IN (?,?)", names)
+
+-named 스타일
+>SQL 구문의 매개변수를 포함해야 할 값에 콜론 과 값을 받을 이름을 표시 한 후 딕셔너리
+를 이용해 이름에 값 을 전달
+ex)cursor.execute("SELECT * FROM MEMBER WHERE NAME=:name", {'name':name})
+
+2. Oracle
+>cx_Oracle 모듈은 makedsn 함수와 connect 함수를 이용해 데이터베
+이스 서버주소 , 포트번호 , SID, 사용자이름 , 비밀번호 등을 설정해야 함
+ex)
+import cx_Oracle
+oracle_dsn = cx_Oracle.makedsn(host="localhost", port=1521, sid="xe")
+conn = cx_Oracle.connect("scott", "tiger", dsn=oracle_dsn)
+cursor = conn.cursor()
+conn.close()
+>이하 동일
+
+*데이터 프레임으로 출력
+import pandas as pd
+cursor.execute("SELECT * FROM EMP")
+data = cursor.fetchall() # 튜플 리스트
+print(data)
+data_df = pd.DataFrame(data) # 데이터 프레임 타입
+
+3.MariaDB
+import pymysql
+conn = pymysql.connect(host="localhost", port=3306, db="kimdb", user="root", 
+                       passwd="mysql", charset="utf8", autocommit=True)
+>이하 동일
