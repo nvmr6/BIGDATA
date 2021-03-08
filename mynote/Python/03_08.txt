@@ -1,0 +1,131 @@
+[12] 데이터프레임과 시리즈
+
+1. pandas 패키지
+:1 차원 구조를 갖는 시리즈 ( 와 2 차원 구조를 갖는 데이터프레임 DataFrame을 제공
+
+>
+-데이터프레임은 테이블 형식이고 이종모음 들로 구조화 된 데이터, 엑셀 시트 또는 스프레드시트
+-시리즈는 시계열 데이터를 표현하기 위한 데이터 구조
+
+-판다스의 데이터프레임과 시리즈 데이터 구조는 재무 , 통계 , 사회 과학 등 다양한 분
+야의 데이터를 처리하기 위해 사용
+-판다스는 데이터의 부분집합 조회 , 열 추가 및 제거 , 병합 , 데이터 구조 변경 등 데이
+터 전처리를 위한 많은 기능을 제공
+
+*행: 각각 다른 데이터를 갖는 튜플, 인덱스를 가짐
+*열: 열 내의 모든 데이터는 같은 타입
+
+*판다스 장점
+1. 결측치 (Missing Value) 처리: 누락 데이터 처리
+2. 크기 변경: 열 삽입 및 삭제
+3. 데이터 정렬 : 명시적으로 정렬 하거나 , 자동으로 데이터를 정렬
+4. 데이터 분할 및 병합 :데이터 세트에 분할 및 병합 작업을 수행
+5. 데이터프레임 생성 :데이터프레임 객체로 쉽게 변환
+6. 부분 데이터 셋 추출 : 지능형 레이블 기반 슬라이싱 , 고급 인덱싱 및 대용량 데이터 세트의 하위 집합
+7. 피벗과 언피벗 : 데이터 세트의 피벗 및 언피벗 기능
+8. 레이블링 : 축의 계층적 레이블링
+9. 파일 입출력: 입출력 도구를 제공 합니다
+10. 시계열 관련 기능 : 날짜 범위 생성 및 빈도 변환 , 통계 , 선형 회귀 등을 사용
+
+2. 데이터 프레임 만들기
+>딕셔너리를 이용해 데이터프레임 을 만들면 키가 열 이름 이 됨
+ex)d = [{'col1':1, 'col2':3}, {'col1':2, 'col2':4}]
+df = pd.DataFrame(data=d)
+
+>리스트 이용
+ex)
+kor = [100,35,48,98,15]
+math = [78,48,66,44,77]
+df = pd.DataFrame({'kor':kor, 'math':math})
+
+>np.c_()이용
+ex)df = pd.DataFrame(np.c_[kor, math], columns=['kor', 'math'])
+
+>read_csv이용
+ex)member_df = pd.read_csv('data/ch12_member_data.csv', sep=',', encoding = 'utf-8', comment='#') #  sep=',', encoding = 'utf-8'은 기본값, 생략 가능
+
+*skiprows = [] > 제외할 행
+*comment = '#' > 주석행, 제외
+
+*Scikit learn 패키지: 학습을 위한 많은 데이터셋 이 제공
+from sklearn import datasets
+iris = datasets.load_iris()
+iris["feature_names"] #독립변수 컬럼명
+iris["data"]#독립변수
+iris['target'] #원핫인코딩이 된 종속 변수
+iris["target_names"] #독립변수명
+
+*컬럼명 지정 > x = pd.DataFrame(iris.data, columns=iris.feature_names)
+
+3. 이름 지정하기
+
+*열 이름 지정 > member_df.columns = ['name', 'age', 'email', 'address']
+*행 이름 지정 > member_df.index = ['1st', '2nd', '3rd', '4th']
+*레벨 이름 지정 > member_df.colums = [['기본정보', '기본정보', '추가정보', '추가정보'],
+                   ['name', 'age', 'email', 'address']]
+
+4. 부분 데이터 조회
+*단일 열 조회
+member_df.Name / member_df['Name']
+
+-loc[]:컬럼, 인덱스 조회
+ex)member_df.loc['2nd':'4th', 'Name':'Email'] #2nd ~ 4th 행의 이름부터 이메일
+
+-iloc[]:정수로 조회
+:member_df.iloc[2] #열 인덱스 생략시 전체 열
+
+-조건으로 조회
+ex)iris_df.loc[iris_df.Species=='virginica', ['Sepal.Length', 'Sepal.Width']].head() # .이 없으면 [""] 필요 없음
+iris_df.loc[(iris_df.Species=='virginica') & (iris_df['Sepal.Length'] >= 6.5)].head() # 조건 두개 이상시 ()작성
+
+5. 데이터 추가 및 삭제
+-항목 삭제
+ex)member_df = member_df.drop(3) 단일행 삭제
+member_df.drop('Email', axis=1, inplace=True)# inplace 속성 설정(True, False)
+
+*요소 추가
+-열 추가
+ex)member_df['Birthyear'] = 2021 - member_df['Age'] +1
+-시리즈 열 추가:인덱스를 포함하는 시리즈 객체를 이용 해 추가
+ex)member_df['Birthyear'] = pd.Series([2001,1995,1996],index=[0,2,3])
+- 행 추가
+ex)new_member = pd.Series(['kang', 43, 'goon@naver.com', 'seoul'],
+                      index = member_df.columns)
+member_df = member_df.append(new_member, ignore_index=True) #데이터프레임 추가가 아 닐때 ignore_index =True 파라미터 지정
+-리스트는 시리즈로 추가
+ex)new_member = pd.Series(['kang', 43, 'goon@naver.com', 'seoul'],
+                      index = member_df.columns)
+-딕셔너리 행 추가
+new_member = pd.DataFrame({'Name':['oh', 'choi'], 'Age':[44,54], 'Email':['wer@naver.com','sdf@naver.com'],
+                          'Address':['seoul', 'seoul'], 'Birthyear':[1997,2008]})# 여러행 한번에 추가
+
+6. 정렬
+-행 이름 정렬
+:sort_index 함수는 데이터프레임의 행 이름을 이용 해서 정렬
+ex)member_df.sort_index(inplace=True, axis=0)
+-열 이름 정렬
+ex)member_df.sort_index(axis=1)
+-값으로 정렬
+ex)member_df.sort_values(by=["Name"], inplace=True)
+
+7.기초 통계 분석
+count: 결측치를 제외한 갯수
+min:최소, max:최대, sum:합, cumprod:누적합, mean:평균, median:중앙값
+quantile:분위수, corr:상관관계, var: 분산(std**2)
+
+*요약 통계량
+describe(): 기본적으로 숫자 데이터만 요약 통계 출력
+
+ex)
+iris_df.iloc[:, -1].describe() # 문자 또는 타임스탬프 자료의 요약 통계
+#unique: 자료의 가지수, top: 제일 많이 나오는 자료, freq: 몇번 나오는지
+
+# include 및 exclude 매개변수를 사용하여 분석되는 열을 추가하거나 제외시킬 수 있다.
+df.describe(include=['int64','bool'])
+df.describe(exclude=['bool','float64']) # exclude 분석열에서 제외할 타입
+
+8. 공분산과 상관계수
+공분산 cov(x,y) > E((x-x의 평균)(y-y의 평균)) 
+>iris_df.cov()
+분산 var(x) > E((x-x의 평균)의 제곱)
+>iris_df.corr()
