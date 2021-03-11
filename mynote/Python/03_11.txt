@@ -1,0 +1,85 @@
+[12]데이터 시각화
+
+*seaborn
+:matplotlib 를 기반으로 만들어진 고수준 그래프 라이브러리
+Seaborn으로 그래프를 그리기 위해서 다음 단계 따릅니다.
+1) 데이터 준비
+2) 미적속성 설정
+3) 함수를 이용하여 그래프 그리기
+4) 그래프 출력, 저장
+
+
+*그리드 설정
+>sns.set(style="darkgrid")
+# style : white(기본), darkgrid, whitegrid, dark, ticke
+
+*팔레트 설정
+>sns.set(palette="deep", style="white")
+# bright/deep/muted/pastel/dark/color blind/ etc...
+
+*컨텍스트지정(비율)
+>sns.set_context("notebook", font_scale=1.5, rc={'lines.linewidth':3})
+# notebook(기본값;1배율), paper(0.8), talk(1.3), poster(1.6)
+
+*그래프 그리기
+
+1) Relational plots : 관계형 그래프
+-산점도
+>sns.scatterplot(data=iris, x="petal_length", y="petal_width", hue="species", palette="bright", style="species")
+# hue 속성에 그룹변수를 넣어 그룹화하여 그룹별 다른 색상 다른 style
+-선그래프
+>sns.lineplot(x="petal_length", y="petal_width", data=iris)
+**서브플롯 이용가능
+ex)
+fig, axes = plt.subplots(ncols=2, figsize=(8,5))
+sns.scatterplot(x="petal_length", y="petal_width", data=iris, hue="species", ax=axes[0])
+sns.lineplot(x="petal_length", y="petal_width", data=iris, ax=axes[1])
+
+-relplot: lineplot을 서브플롯으로 표현
+>ax = sns.relplot(x="petal_length", y="petal_width", data=iris, hue="species",
+           kind="line", # 기본값은 scatter
+           col="species", # col 단위로 서브플롯 표현
+           col_wrap=2) # 한줄에 표현될 서브플롯 수
+
+2) categorical plots ; 범주형 그래프
+-산점도1
+>sns.stripplot(x="species", y="petal_width", data=iris)
+-산점도2
+>sns.swarmplot(x="species", y="petal_width", data=iris)
+-바 그래프
+>sns.barplot(x="sex", y="survived", data=titanic, hue='class')
+-catplot: barplot을 서브플롯으로
+>a = sns.catplot(x="sex", y="survived", data=titanic, hue="class", ci=None, kind="bar", col="class")
+-포인트 플롯
+>sns.pointplot(x="class", y="survived", hue="sex", data=titanic,
+             palette={"male":"b","female":"r"},
+             markers=["^","o"],
+             linestyles=['-','--'])
+-박스 플롯, 바이올린 플롯, 박센 플롯
+>sns.boxplot(y="sex", x="age", data=titanic, hue="survived")
+>sns.violinplot(y="sex", x="age", data=titanic, hue="survived")
+>sns.boxenplot(x="alive", y="age", hue="adult_male", data=titanic)
+
+3) 쌍관계그래프
+-페어 플롯
+sns.pairplot(data=iris, hue="species", palette="husl", markers=['o','s','D'])
+-디스 플롯
+>sns.displot(x, kde=False)
+
+4) 회귀 그래프
+-회귀 그래프
+>sns.lmplot(x="petal_width", y="petal_length", data=iris, hue="species")
+-lmplot, regplot:  회귀모형을 만드는 함수
+sns.lmplot(x="petal_width", y="petal_length", data=iris)
+-regplot
+sns.regplot(x="petal_width", y="petal_length", data=iris) #단점 : hue를 못 씀
+
+5)행렬그래프
+-상관계수 그래프
+>sns.heatmap(iris.corr(), vmin=-1, vmax=1, annot=True, cmap="YlGnBu", fmt=".1f")
+
+*다중 그래프를 위한 FacetGrid
+-그룹화한 값들을 다른 그래프에서 나타냄
+>g = sns.FacetGrid(iris, col="species", hue="species")
+g.map(plt.hist, 'sepal_length')
+g.set_axis_labels(y_var="count")
