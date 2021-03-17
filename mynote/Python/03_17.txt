@@ -27,7 +27,6 @@ soup.select_one(CSS선택자)
 2.requests
 :파이썬에서 HTTP 요청을 만들기 위한 사실상의 표준
 >import requests
-
 get(): HTTP 요청 (Request) 방식 중 하나
 >response= requests.get(url) > 요청의 결과를 저장한 객체
 >.content: 바이트 단위로, text: 문자열 인코딩 
