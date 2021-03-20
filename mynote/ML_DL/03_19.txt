@@ -1,0 +1,75 @@
+ML & DL
+* 머신 러닝 방식
+1. 데이터 확보 및 생성
+2. 데이터 전처리(훈련 데이터, 검증 데이터, 시험 데이터)
+3. 모델 구성
+4. 모델 학습 과정 설정
+5. 모델 학습시키기
+6. 모델 평가(시험 데이터 셋으로)
+7. 모델 사용(입력값을 예측)
+ex)
+from tensorflow.keras.models import Sequential# 모델 생성
+from tensorflow.keras.layers import Dense #입력과 출력
+1,2.데이터 확보 및 생성, 전처리
+data_c = np.array(range(100))
+data_f = celcius_to_fahrenheit(data_c)#타겟 데이터
+3. 모델 구성
+model = Sequential()
+model.add(Dense(1, input_dim=1))#독립변수 1개, 타겟 데이터 1개
+4. 모델 학습 과정 설정
+model.compile(loss="mse", optimizer="rmsprop", metrics=['mae'])
+-학습 전 예측
+print(model.predict([0]))
+-normalize
+scaled_data_C = data_c/100.0
+scaled_data_F = data_f/100.0
+print(scaled_data_C)
+print()
+print(scaled_data_F)
+5.학습시키기
+hist = model.fit(scaled_data_C, scaled_data_F, epochs=1000, verbose=2)#학습횟수
+6. 평가
+plt.plot(hist.history['loss']) #loss 감소
+plt.show()
+7. 사용
+model.predict([0.01])
+
+1. 비지도 학습
+1)군집화
+ex)
+data = []#데이터 생성
+for i in range(50):
+    data.append([random.randint(40,70), random.randint(140,180)])
+    data.append([random.randint(60,90), random.randint(170,200)])
+def dist(a, b):
+    return np.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2)#두 점간의 거리 계산 함수
+new_points = [[random.randint(40,90), random.randint(140,200)],
+              [random.randint(40,90), random.randint(140,200)]]#임의의 두 점 생성
+print('기준점: ', new_points)
+for i in range(1,11):
+    group1 = []
+    group2 = []
+    for d in data:
+        if dist(new_points[0],d) < dist(new_points[1],d):
+            group1.append(d)
+        else:
+            group2.append(d)#두 점을 기준으로 가까운 쪽으로 분류하여 구분
+    sumX = 0; sumY = 0
+    for g in group1:
+        sumX += g[0]
+        sumY += g[1]
+    new_points = []
+    new_points.append([sumX/len(group1),sumY/len(group1)])
+    sumX = 0; sumY = 0
+    for g in group2:
+        sumX += g[0]
+        sumY += g[1]
+    new_points.append([sumX/len(group2),sumY/len(group2)])# 두 집단의 중앙값으로 새로운 두 지점 생성
+> 새로운 두 점을 반복하여 생성하여 두 그룹으로 분류
+    print(i,"번째 기준: ",new_points)
+for d in group1:
+    plt.plot(d[0], d[1], 'o', color='r')
+for d in group2:
+    plt.plot(d[0], d[1], 'o', color='b')
+plt.plot(new_points[0][0], new_points[0][1],'x',color='r')
+plt.plot(new_points[1][0], new_points[1][1],'x',color='b')
