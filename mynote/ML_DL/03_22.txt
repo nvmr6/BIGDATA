@@ -1,0 +1,172 @@
+2. 지도 학습
+-컴퓨터에게 어떤 것이 맞는 답안지를 지정
+-목적 값이 있음
+-맞는 것이 무엇인지 비교 판단 > 학습
+-분류와 예측으로 구분
+
+1)분류 
+:이전까지의 학습한 데이터를 기초로 결과를 판별
+-목적 값의 연속성이 없이 몇 가지 값으로 분류됨
+ex)
+#학습 데이터(훈련 데이터)
+X_train = np.array([1,2,3,4,5,6,7,8,9]*10)
+Y_train = np.array([2,4,6,8,10,12,14,16,18]*10)
+#검증 데이터, 테스트 데이터
+X_val = np.array([1,2,3,4,5,6,7,8,9])
+Y_val = np.array([2,4,6,8,10,12,14,16,18])
+#분류 분석을 하기 위해 타겟 데이터를 라벨링 전환(원핫인코딩)
+Y_train = utils.to_categorical(Y_train, 19)
+Y_val = utils.to_categorical(Y_val, 19)
+#모델 구성하기
+model = Sequential()
+model.add(Dense(units=38, input_dim=1, activation="sigmoid"))#활성화 함수
+model.add(Dense(units=64, activation="elu"))#일정값 이상부터 활성화
+model.add(Dense(units=32, activation="elu"))
+model.add(Dense(units=19, activation="softmax"))#모든 출력 결과 1
+#모델 학습 과정 설정
+model.compile(loss="categorical_crossentropy", optimizer="sgd", metrics=["accuracy"])
+#모델 학습시키기
+hist = model.fit(X_train, Y_train, epochs=300, batch_size=10, verbose=2, validation_data=(X_val, Y_val))
+#모델 학습 과정 확인
+fig, loss_ax = plt.subplots()
+loss_ax.plot(hist.history['loss'],'y',label="train loss")
+loss_ax.plot(hist.history['val_loss'],'r',label="val loss")
+
+acc_ax = loss_ax.twinx() #x축 공유하는 acc_ax 생성
+acc_ax.plot(hist.history['accuracy'],'g',label="train acc")
+acc_ax.plot(hist.history['val_accuracy'],'b',label="val acc")
+
+loss_ax.set_xlabel("epoch")
+loss_ax.set_ylabel("loss")
+acc_ax.set_ylabel("accuracy")
+loss_ax.legend(loc="lower left")
+acc_ax.legend(loc="lower right")
+plt.show()
+2)예측
+:일종의 회귀분석
+-목적 값의 연속성이 있음
+>model.predict(np.array([2])).argmax()
+
+3. version 1 으로 머신 러닝
+:버전 2에서도 버전 1 사용 가능
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior() #버전1로 사용 가능
+ex)
+node1 = tf.constant(10,dtype=tf.float32)
+node2 = tf.constant(20,dtype=tf.float32)
+node3 = tf.add(node1, node2)tensor 선언
+sess = tf.Session()#computational graph 생성
+
+*node2 = tf.cast(node1, dtype=tf.float32)#형변환
+
+1)독립변수 x 1개 linear regression(placeholder 이용)
+ex)
+#training dataset
+x_data = [1,2,3]
+y_data = [5,7,9]
+#placeholder
+x = tf.placeholder(tf.float32)
+y = tf.placeholder(tf.float32)
+#weight and bias, 학습과정에서 변경
+W = tf.Variable(tf.random_normal([1]), name="weight")
+b = tf.Variable(tf.random_normal([1]), name="bias")
+#hypothesis
+H = W*x + b
+#cost function의 최소가 되는 W와 b를 찾는 것, 미분값이 줄어드는 방향으로 학습
+cost = tf.reduce_mean(tf.square(H - y))
+#최소 제곱법
+optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)
+train = optimizer.minimize(cost)
+#Session and cost 초기화
+sess = tf.Session()
+# variable 노드 초기화
+sess.run(tf.global_variables_initializer())
+#training
+for step in range(1,6001):
+    _, cost_val, W_val, b_val = sess.run([train, cost, W, b], feed_dict={x:x_data, y:y_data})
+    if step%200 ==0:
+        print("{}번째 cost: {} W: {} b: {}".format(step, cost_val, W_val, b_val))
+sess.run([W, b]) #확인
+sess.run(H, feed_dict={x:5}) # predict
+
+2)독립변수가 여러개인 linear regression
+ex)
+#training dataset
+x_data = np.array([[73,80,75],
+                   [93,88,93],
+                   [89,91,90],
+                   [96,98,100],
+                   [73,66,70]])
+y_data = np.array([[152],
+                   [185],
+                   [180],
+                   [196],
+                   [142]])
+
+# placeholder 
+X = tf.placeholder(shape=[None, 3], dtype=tf.float32)
+Y = tf.placeholder(shape=[None, 1], dtype=tf.float32)
+
+# Weight & bias
+W = tf.Variable(tf.random_normal([3,1]), name="weight")
+b = tf.Variable(tf.random_normal([1]), name="bias")
+
+# Hypothesis
+# H = X @ W + b
+H = tf.matmul(X, W) + b #행렬 곱
+
+# cost function
+cost = tf.reduce_mean(tf.square(H - Y))
+
+# train
+train = tf.train.GradientDescentOptimizer(learning_rate=1e-5).minimize(cost)
+
+# session & Variable 초기화
+sess = tf.Session()
+sess.run(tf.global_variables_initializer())
+
+# 학습
+for step in range(1, 60001):
+    _, cost_val = sess.run([train, cost], feed_dict={X:x_data, 
+                                                    Y : y_data})
+    if step%3000 == 0 :
+        print("{}번째 cost:{}".format(step, cost_val))
+
+3)scale이 다른 데이터들의 linear regression
+:scale을 맞추는 방법: normalization, standardization
+ex)
+[1] normalization
+#training data set 생성
+#data load > 결측치 처리 > 독립변수, 종속변수 분리
+data = pd.read_csv('data/ozone.csv',sep=',')
+data = data.dropna(how='any')#한 열이라도 결측치이면 제거
+
+#scale 조정
+data['Ozone'] = (data['Ozone'] - data['Ozone'].mean()) / data['Ozone'].std()
+data['Solar.R'] = (data['Solar.R'] - data['Solar.R'].mean()) / data['Solar.R'].std()
+data['Wind'] = (data['Wind'] - data['Wind'].mean()) / data['Wind'].std()
+data['Temp'] = (data['Temp'] - data['Temp'].mean()) / data['Temp'].std()
+
+data = data[['Ozone','Solar.R','Wind','Temp']]#독립변수
+x_data = data[['Solar.R','Wind','Temp']].values # 데이터프레임을 numpy 배열로 변경
+y_data = data[['Ozone']].values.reshape(-1,1)
+x_data.shape, y_data.shape
+
+[2] minmaxscaler
+#training data set 생성
+#data load > 결측치 처리 > 독립변수, 종속변수 분리
+data = pd.read_csv('data/ozone.csv',sep=',')
+data = data.dropna(how='any')#한 열이라도 결측치이면 제거
+data = data[['Ozone','Solar.R','Wind','Temp']]#독립변수
+
+x_data = data[['Solar.R','Wind','Temp']].values # 데이터프레임을 numpy 배열로 변경
+y_data = data[['Ozone']].values.reshape(-1,1)
+
+#scale 조정(sklearn.preprocessing.minmaxscaler)
+from sklearn.preprocessing import MinMaxScaler
+scale_x = MinMaxScaler() #scale조정할 객체
+scale_x.fit(x_data)
+x_data = scale_x.transform(x_data)
+scale_y = MinMaxScaler() #scale조정할 객체
+scale_y.fit(y_data)
+y_data = scale_y.transform(y_data)
