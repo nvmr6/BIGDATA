@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    <link href="{% static 'css/ex.css'%}" rel="stylesheet" type="text">
+</head>
+<body>
+    <h2>render func template</h2>
+    <h1>ID: {{type}}</h1>
+    <h2>{{msg}}</h2>
+    <a href="{% url 'index' %}">to index</a>
+</body>
+</html>
